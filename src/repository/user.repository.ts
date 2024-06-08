@@ -1,20 +1,27 @@
 import { injectable } from 'tsyringe';
 import User from '../model/user.model';
 import IUserRepository from './interfaces/i.user.repository';
+import { Repository } from 'typeorm';
+import { dataSource } from '../config/database';
 
 @injectable()
 export default class UserRepository implements IUserRepository {
     users: Array<User> = []
+    _userRepository: Repository<User>
 
-    getUserByUsername(username: string): User | undefined {
-        return this.users.find(user => user.username == username)
+    constructor() {
+        this._userRepository = dataSource.getRepository(User)
     }
 
-    getUser(id: string): User | undefined {
-        return this.users.find(user => user.id == id)
+    getUserByUsername(username: string): Promise<User | null> {
+        return this._userRepository.findOneBy({ username })
     }
 
-    addNewUser(newUser: User): void {
-        this.users.push(newUser)
+    getUser(id: string): Promise<User | null> {
+        return this._userRepository.findOneBy({ id })
+    }
+
+    addNewUser(newUser: User): Promise<User> {
+        return this._userRepository.save(newUser)
     }
 }

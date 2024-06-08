@@ -1,9 +1,8 @@
 import Task from "../../model/task.model"
 
 export default interface ITaskRepository {
-    getTasks(): Array<Task>
-    getTask(id: string): Task | undefined
-    addNewTask(newTask: Task): void
-    deleteTask(id: string): void
-    getTasksByUser(id: string): Array<Task>
+    getTasks(): Promise<Array<Task>>
+    getTask(id: string): Promise<Task | null>
+    addNewTask(newTask: Task): Promise<Task>
+    deleteTask(task: Task): Promise<Task>
 }

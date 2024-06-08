@@ -2,23 +2,30 @@ import { container, inject, injectable } from 'tsyringe'
 import { Request, Response, Router } from 'express'
 import UserService from '../services/user.service';
 import IUserService from '../services/interfaces/i.user.service';
-import AddUserRequest from '../dto/requests/add-user.request';
-import AuthenticateUserRequest from '../dto/requests/authenticate-user.request';
+import AddUserRequest from '../util/requests/add-user.request';
+import AuthenticateUserRequest from '../util/requests/authenticate-user.request';
+import { auth } from './middleware/auth.middleware';
 
 @injectable()
 export class UserController {
     constructor(@inject(UserService) private userService : IUserService) {}
 
-    signup(req: Request, res: Response) {
+    async signup(req: Request, res: Response) {
         const userRequest: AddUserRequest = req.body
-        this.userService.addUser(userRequest)
-        res.status(201).json({ id: 'as' })
+        const id = await this.userService.addUser(userRequest)
+        res.status(201).json({ id })
     }
 
-    signin(req: Request, res: Response) {
+    async signin(req: Request, res: Response) {
         const userRequest: AuthenticateUserRequest = req.body
-        const isAuthenticated = this.userService.authenticate(userRequest)
-        res.status(201).json({ isAuthenticated })
+        const result = await this.userService.authenticate(userRequest)
+        res.status(201).json(result)
+    }
+
+    async getTasks(req: Request, res: Response) {
+        if (!req.user?.id) return
+        const tasks = await this.userService.getTasks(req.user.id)
+        res.json({ data: tasks })
     }
 }
 
@@ -30,5 +37,8 @@ router.route('/user/signup')
 
 router.route('/user/authenticate')
     .get(userController.signin.bind(userController))
+
+router.route('/user/task')
+    .get(auth, userController.getTasks.bind(userController))
 
 export default router

@@ -1,28 +1,31 @@
 import { injectable } from 'tsyringe';
+import { Repository } from 'typeorm';
 import Task from '../model/task.model';
 import ITaskRepository from './interfaces/i.task.respository';
+import { dataSource } from '../config/database';
 
 @injectable()
 export default class TaskRepository implements ITaskRepository {
     tasks: Array<Task> = []
-
-    getTasks(): Array<Task> {
-        return this.tasks
+    _taskRepository: Repository<Task>
+    
+    constructor() {
+        this._taskRepository = dataSource.getRepository(Task)    
     }
 
-    getTask(id: string): Task | undefined {
-        return this.tasks.find(task => task.id == id)
+    getTasks(): Promise<Array<Task>> {
+        return this._taskRepository.find()
     }
 
-    getTasksByUser(id: string): Array<Task> {
-        return this.tasks.filter(task => task.owner.id == id)
+    getTask(id: string): Promise<Task | null> {
+        return this._taskRepository.findOneBy({ id })
     }
 
-    addNewTask(newTask: Task): void {
-        this.tasks.push(newTask)
+    addNewTask(newTask: Task): Promise<Task> {
+        return this._taskRepository.save(newTask)
     }
 
-    deleteTask(id: string): void {
-        this.tasks = this.tasks.filter(task => task.id != id)
+    deleteTask(task: Task): Promise<Task> {
+        return this._taskRepository.remove(task)
     }
 }
