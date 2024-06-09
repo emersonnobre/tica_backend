@@ -1,7 +1,7 @@
 {
-  "name": "tasks-manager-api",
+  "name": "tica-backend",
   "version": "1.0.0",
-  "description": "A tasks manager software built with nodejs, express and typescript",
+  "description": "Backend API for store management",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

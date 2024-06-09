@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { TokenManager } from '../../util/security/token'
+import { TokenManager } from '../util/security/token'
 
 export function auth(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization']

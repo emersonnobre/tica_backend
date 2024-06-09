@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
-import User from '../model/user.model'
-import Task from '../model/task.model'
+import Product from '../models/product.model'
+import User from '../models/user.model'
 
 export const dataSource = new DataSource({
     type: 'mssql',
@@ -10,7 +10,7 @@ export const dataSource = new DataSource({
     password: '56642202Egr!',
     database: 'master',
     synchronize: true,
-    entities: [User, Task],
+    entities: [Product, User],
     extra: {
         options: {
             encrypt: true,
