@@ -19,7 +19,7 @@ export default class ProductService implements IProductService {
             return new ApiResponse<Product[]>(true, 200, undefined, products)
         } catch(err) {
             console.log(err)
-            return new ApiResponse<Product[]>(false, 500, 'An error ocurred')
+            return new ApiResponse<Product[]>(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
         }
     }
 
@@ -31,12 +31,16 @@ export default class ProductService implements IProductService {
             return new ApiResponse(true, 200, undefined, product)
         } catch(err) {
             console.log(err)
-            return new ApiResponse(false, 500, 'An error ocurred')
+            return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
         }
     }
 
     async createProduct(productRequest: CreateProductRequest): Promise<ApiResponse<string | null>> {
         try {
+            const exists = await this.existsWithName(productRequest.name)
+            if (exists)
+                return new ApiResponse(false, 400, 'Já existe um produto com esse nome!')
+
             const product: Product = new Product(
                 v1(),
                 productRequest.name,
@@ -48,7 +52,7 @@ export default class ProductService implements IProductService {
             return new ApiResponse(true, 201, undefined, product.id)
         } catch(err) {
             console.log(err)
-            return new ApiResponse(false, 500, 'An error ocurred')
+            return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
         }
     }
 
@@ -57,5 +61,10 @@ export default class ProductService implements IProductService {
         if (!product) return new ApiResponse(true, 404, 'This product does not exists')
         await this.productRepository.deleteProduct(product)
         return new ApiResponse(true, 200, 'Deleted')
+    }
+
+    async existsWithName(name: string): Promise<boolean> {
+        const product = await this.productRepository.getProductByName(name)
+        return !!product
     }
 }

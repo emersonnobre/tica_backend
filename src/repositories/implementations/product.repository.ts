@@ -20,6 +20,10 @@ export default class ProductRepository implements IProductRepository {
         return this._productRepository.findOneBy({ id })
     }
 
+    getProductByName(name: string): Promise<Product | null> {
+        return this._productRepository.findOneBy({ name })
+    }
+
     createProduct(newProduct: Product): Promise<Product> {
         return this._productRepository.save(newProduct)
     }
