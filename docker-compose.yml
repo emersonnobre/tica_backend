@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:alpine  # Escolha a versão desejada
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=tica123 # Defina uma senha forte para o usuário SA
+      - POSTGRES_USER=tica
+      - POSTGRES_DB=tica
+    ports:
+      - "5432:5432" # Mapeia a porta 5432 do host para o container
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=egrnobre@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=senha123
+    ports:
+      - "8080:80"
+    depends_on:
+      - db

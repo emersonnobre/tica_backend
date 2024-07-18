@@ -6,10 +6,12 @@ import express, { Express } from 'express'
 import productRoutes from './routes/product.routes'
 import userRoutes  from './routes/user.routes'
 import { dataSource } from './config/database'
+import swagger from './config/swagger'
 
 const app: Express = express()
 
 app.use(express.json())
+app.use('/api-docs', swagger.swaggerUI.serve, swagger.swaggerUI.setup(swagger.specs))
 app.use(productRoutes, userRoutes)
 
 app.listen(process.env.SERVER_PORT, () => {

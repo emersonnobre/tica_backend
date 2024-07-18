@@ -10,7 +10,7 @@ export default class Product {
     costPrice: number
     @Column('decimal')
     sellPrice: number
-    @Column('datetime', { nullable: true })
+    @Column('timestamp', { nullable: true })
     createdAt: Date
     
     constructor(id: string, name: string, costPrice: number, sellPrice: number) {

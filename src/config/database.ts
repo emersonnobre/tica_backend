@@ -3,18 +3,13 @@ import Product from '../models/product.model'
 import User from '../models/user.model'
 
 export const dataSource = new DataSource({
-    type: 'mssql',
+    type: 'postgres',
     host: 'localhost',
-    port: 1433,
-    username: 'sa',
-    password: '56642202Egr!',
-    database: 'master',
+    port: 5432,
+    username: 'tica',
+    password: 'tica123',
+    database: 'tica',
     synchronize: true,
     entities: [Product, User],
-    extra: {
-        options: {
-            encrypt: true,
-            trustServerCertificate: true
-        }
-    }
+    logging: true,
 })
