@@ -14,8 +14,17 @@ const options: swaggerJsdoc.Options = {
                 url: 'http://localhost:3000'
             },
         ],
+        components: {
+            securitySchemes: {
+              bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT', // (opcional, especifica o formato do token)
+              },
+            },
+        },
     },
-    apis: ['**/*.ts', './src/config/parameters.yaml']
+    apis: ['**/*.ts', './schemas.ts'],
 }
 
 const specs = swaggerJsdoc(options)

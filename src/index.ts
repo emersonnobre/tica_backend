@@ -11,7 +11,21 @@ import swagger from './config/swagger'
 const app: Express = express()
 
 app.use(express.json())
-app.use('/api-docs', swagger.swaggerUI.serve, swagger.swaggerUI.setup(swagger.specs))
+app.use('/api-docs', swagger.swaggerUI.serve, swagger.swaggerUI.setup(swagger.specs, {
+    swaggerOptions: {
+      authAction: {
+        bearerAuth: {
+          name: "bearerAuth",
+          schema: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+          },
+          value: "Bearer <JWT>",
+        },
+      },
+    },
+  }))
 app.use(productRoutes, userRoutes)
 
 app.listen(process.env.SERVER_PORT, () => {
