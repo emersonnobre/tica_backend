@@ -7,17 +7,23 @@ export default class Product {
     @Column({ length: 100 })
     name: string
     @Column('decimal')
-    costPrice: number
+    purchasePrice: number
     @Column('decimal')
-    sellPrice: number
+    salePrice: number
+    @Column('integer')
+    stock: number
+    @Column({ length: 100 })
+    barcode: string
     @Column('timestamp', { nullable: true })
     createdAt: Date
     
-    constructor(id: string, name: string, costPrice: number, sellPrice: number) {
+    constructor(id: string, name: string, purchasePrice: number, salePrice: number, stock: number) {
         this.id = id
         this.name = name
-        this.costPrice = costPrice
-        this.sellPrice = sellPrice
+        this.purchasePrice = purchasePrice
+        this.salePrice = salePrice
+        this.stock = stock
+        this.barcode = 'barcode teste' // todo: implementar lógica de código de barras
         this.createdAt = new Date()
     }
 }

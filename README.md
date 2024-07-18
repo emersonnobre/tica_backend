@@ -1,10 +1,10 @@
 PARA RODAR ESTE PROJETO
 - No diretório root rodar:
-  docker-compose up -d
+  docker compose up -d
   para subir o banco de dados e o pgAdmin via docker
 
 - Feito isso, rodar os seguintes comandos para subir o projeto:
-  npm install
+  npm install (apenas na primeira vez em que for rodar o projeto ou quando realizadas atualizações nas bibliotecas do projeto)
   npm run dev
 
 - Serviços:

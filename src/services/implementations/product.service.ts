@@ -40,8 +40,9 @@ export default class ProductService implements IProductService {
             const product: Product = new Product(
                 v1(),
                 productRequest.name,
-                productRequest.costPrice,
-                productRequest.sellPrice
+                productRequest.purchasePrice,
+                productRequest.salePrice,
+                productRequest.stock
             )
             this.productRepository.createProduct(product)
             return new ApiResponse(true, 201, undefined, product.id)

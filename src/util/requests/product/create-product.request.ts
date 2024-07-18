@@ -1,5 +1,6 @@
 export interface CreateProductRequest {
     name: string
-    costPrice: number
-    sellPrice: number
+    purchasePrice: number
+    salePrice: number
+    stock: number
 }
