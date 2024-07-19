@@ -5,6 +5,5 @@ export default interface IProductRepository {
     getCount(isFeedstock: boolean, name?: string): Promise<number>
     getProduct(id: string): Promise<Product | null>
     getProductByName(name: string): Promise<Product | null>
-    createProduct(newProduct: Product): Promise<Product>
-    deleteProduct(task: Product): Promise<Product>
+    saveProduct(newProduct: Product): Promise<Product>
 }

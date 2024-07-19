@@ -107,7 +107,31 @@ router.get('/products', auth, productController.getProducts.bind(productControll
  */
 router.get('/products/:id', productController.getProduct.bind(productController))
 
-router.route('/products/:id')
-  .delete(productController.deleteProduct.bind(productController))
+/**
+ * @swagger
+ * /products/{id}:
+ *  delete:
+ *   summary: Deletes a product
+ *   tags:
+ *    - products
+ *   security:
+ *    - bearerAuth: []
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      example: 1d391f60-45fd-11ef-a240-47784411b112
+ *      schema:
+ *       type: string
+ *      description: Product id
+ *   responses:
+ *    204:
+ *     description: Product deleted
+ *    500:
+ *     description: Internal error
+ *    404:
+ *     description: Not found 
+ */
+router.delete('/products/:id', productController.deleteProduct.bind(productController))
 
 export default router

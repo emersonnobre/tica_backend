@@ -14,7 +14,7 @@ export default class ProductRepository implements IProductRepository {
 
   getProducts(offset: number, limit: number, isFeedstock: boolean, name?: string): Promise<Array<Product>> {
     const queryBuilder = this._productRepository.createQueryBuilder()
-    queryBuilder.where({ isFeedstock })
+    queryBuilder.where({ isFeedstock }).andWhere({ active: true })
     if (name)
       queryBuilder.andWhere('Product.name LIKE :partialName', { partialName: `%${name}%` })
     queryBuilder.orderBy('name', 'ASC').skip(offset).take(limit)
@@ -23,25 +23,25 @@ export default class ProductRepository implements IProductRepository {
 
   getCount(isFeedstock: boolean, name?: string): Promise<number> {
     const queryBuilder = this._productRepository.createQueryBuilder()
-    queryBuilder.where({ isFeedstock })
+    queryBuilder.where({ isFeedstock }).andWhere({ active: true })
     if (name)
       queryBuilder.andWhere('Product.name LIKE :partialName', { partialName: `%${name}%` })
     return queryBuilder.getCount()
   }
 
   getProduct(id: string): Promise<Product | null> {
-    return this._productRepository.findOneBy({ id })
+    const queryBuilder = this._productRepository.createQueryBuilder()
+    queryBuilder.where({ active: true }).andWhere({ id })
+    return queryBuilder.getOne()
   }
 
   getProductByName(name: string): Promise<Product | null> {
-    return this._productRepository.findOneBy({ name })
+    const queryBuilder = this._productRepository.createQueryBuilder()
+    queryBuilder.where({ active: true }).andWhere({ name })
+    return queryBuilder.getOne()
   }
 
-  createProduct(newProduct: Product): Promise<Product> {
+  saveProduct(newProduct: Product): Promise<Product> {
     return this._productRepository.save(newProduct)
-  }
-
-  deleteProduct(product: Product): Promise<Product> {
-    return this._productRepository.remove(product)
   }
 }

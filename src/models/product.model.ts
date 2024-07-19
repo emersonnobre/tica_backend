@@ -39,25 +39,11 @@ export default class Product {
   @AutoMap()
   @Column('integer', { nullable: true })
   updatedBy?: number // todo: implementar funcionario
+  @AutoMap()
+  @Column('boolean', { default: true })
+  active: boolean
 
-  constructor(id: string, 
-              name: string, 
-              purchasePrice: number, 
-              stock: number, 
-              isFeedstock: boolean,
-              category: number,
-              createdBy: number, 
-              salePrice?: number) 
-  {
-    this.id = id
-    this.name = name
-    this.purchasePrice = purchasePrice
-    this.salePrice = salePrice
-    this.stock = stock
-    this.barcode = 'barcode teste' // todo: implementar lógica de código de barras
-    this.createdAt = new Date()
-    this.isFeedstock = isFeedstock
-    this.category = category
-    this.createdBy = createdBy
+  public inactivate() {
+    this.active = false
   }
 }

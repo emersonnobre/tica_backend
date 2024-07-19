@@ -73,4 +73,7 @@
  *         updatedBy:
  *           type: number
  *           description: Id from employee who's updated the product
+ *         active:
+ *           type: boolean
+ *           description: if the product is active or not
  */

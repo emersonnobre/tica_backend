@@ -49,7 +49,7 @@ export default class ProductService implements IProductService {
         return new ApiResponse(false, 400, 'Já existe um produto com esse nome!')
 
       const product: Product = mapper.map(productRequest, CreateProductRequest, Product)
-      this.productRepository.createProduct(product)
+      this.productRepository.saveProduct(product)
       return new ApiResponse(true, 201, undefined, product.id)
     } catch (err) {
       console.log(err)
@@ -59,9 +59,11 @@ export default class ProductService implements IProductService {
 
   async deleteProduct(id: string): Promise<ApiResponse<void>> {
     const product = await this.productRepository.getProduct(id)
-    if (!product) return new ApiResponse(true, 404, 'This product does not exists')
-    await this.productRepository.deleteProduct(product)
-    return new ApiResponse(true, 200, 'Deleted')
+    if (!product) 
+      return new ApiResponse(true, 404, 'Produto não encontrado!')
+    product.inactivate()
+    await this.productRepository.saveProduct(product)
+    return new ApiResponse(true, 204, undefined)
   }
 
   async existsWithName(name: string): Promise<boolean> {

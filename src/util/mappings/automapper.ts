@@ -20,6 +20,7 @@ export const configureMapper = () => {
     forMember(destination => destination.createdBy, fromValue(1)),
     forMember(destination => destination.createdAt, fromValue(new Date())),
     forMember(destination => destination.category, mapFrom(source => source.categoryId)),
+    forMember(destination => destination.active, fromValue(true)),
   )
 
   createMap(

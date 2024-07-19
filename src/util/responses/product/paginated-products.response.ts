@@ -30,4 +30,6 @@ export class ProductResponse {
   updatedAt?: Date
   @AutoMap()
   updatedBy?: number
+  @AutoMap()
+  active: boolean
 }
