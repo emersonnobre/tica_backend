@@ -7,8 +7,10 @@ import productRoutes from './routes/product.routes'
 import userRoutes  from './routes/user.routes'
 import { dataSource } from './config/database'
 import swagger from './config/swagger'
+import { configureMapper } from './util/mappings/automapper'
 
 const app: Express = express()
+configureMapper()
 
 app.use(express.json())
 app.use('/api-docs', swagger.swaggerUI.serve, swagger.swaggerUI.setup(swagger.specs, {
