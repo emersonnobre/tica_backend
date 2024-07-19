@@ -6,29 +6,42 @@ import Product from '../../models/product.model';
 
 @injectable()
 export default class ProductRepository implements IProductRepository {
-    _productRepository: Repository<Product>
-    
-    constructor() {
-        this._productRepository = dataSource.getRepository(Product)    
-    }
+  _productRepository: Repository<Product>
 
-    getProducts(): Promise<Array<Product>> {
-        return this._productRepository.find()
-    }
+  constructor() {
+    this._productRepository = dataSource.getRepository(Product)
+  }
 
-    getProduct(id: string): Promise<Product | null> {
-        return this._productRepository.findOneBy({ id })
-    }
+  getProducts(offset: number, limit: number, isFeedstock: boolean, name?: string): Promise<Array<Product>> {
+    const queryBuilder = this._productRepository.createQueryBuilder()
+    queryBuilder.where({ isFeedstock })
+    if (name)
+      queryBuilder.andWhere('Product.name LIKE :partialName', { partialName: `%${name}%` })
+    queryBuilder.orderBy('name', 'ASC').skip(offset).take(limit)
+    return queryBuilder.getMany()
+  }
 
-    getProductByName(name: string): Promise<Product | null> {
-        return this._productRepository.findOneBy({ name })
-    }
+  getCount(isFeedstock: boolean, name?: string): Promise<number> {
+    const queryBuilder = this._productRepository.createQueryBuilder()
+    queryBuilder.where({ isFeedstock })
+    if (name)
+      queryBuilder.andWhere('Product.name LIKE :partialName', { partialName: `%${name}%` })
+    return queryBuilder.getCount()
+  }
 
-    createProduct(newProduct: Product): Promise<Product> {
-        return this._productRepository.save(newProduct)
-    }
+  getProduct(id: string): Promise<Product | null> {
+    return this._productRepository.findOneBy({ id })
+  }
 
-    deleteProduct(product: Product): Promise<Product> {
-        return this._productRepository.remove(product)
-    }
+  getProductByName(name: string): Promise<Product | null> {
+    return this._productRepository.findOneBy({ name })
+  }
+
+  createProduct(newProduct: Product): Promise<Product> {
+    return this._productRepository.save(newProduct)
+  }
+
+  deleteProduct(product: Product): Promise<Product> {
+    return this._productRepository.remove(product)
+  }
 }
