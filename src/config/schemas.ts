@@ -76,4 +76,36 @@
  *         active:
  *           type: boolean
  *           description: if the product is active or not
+ *     UpdateProduct:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Product name
+ *           required: true
+ *           example: prato chique
+ *         purchasePrice:
+ *           type: number
+ *           description: Purchase price
+ *           required: true
+ *           example: 18.99
+ *         salePrice:
+ *           type: number
+ *           description: Sale price
+ *           example: 28.99
+ *         isFeedstock:
+ *           type: boolean
+ *           description: if is feedstock or not
+ *           required: true
+ *           example: false
+ *         categoryId:
+ *           type: number
+ *           description: Product category
+ *           required: true
+ *           example: 1
+ *         updatedBy:
+ *           type: number
+ *           description: Id from employee who's updated the product
+ *           required: true
+ *           example: 1
  */

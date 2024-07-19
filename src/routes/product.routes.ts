@@ -9,30 +9,6 @@ const productController = container.resolve(ProductController)
 /**
  * @swagger
  * /products:
- *  post:
- *   summary: Creates a new product
- *   tags:
- *    - products     
- *   security:
- *    - bearerAuth: []
- *   requestBody:
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/CreateProduct'
- *   responses:
- *    201:
- *     description: Product created
- *    500:
- *     description: Internal error
- *    400:
- *     description: Bad request 
- */
-router.post('/products', auth, productController.addNewProduct.bind(productController))
-
-/**
- * @swagger
- * /products:
  *  get:
  *   summary: Gets a list of products
  *   tags:
@@ -89,7 +65,7 @@ router.get('/products', auth, productController.getProducts.bind(productControll
  *    - in: path
  *      name: id
  *      required: true
- *      example: 1d391f60-45fd-11ef-a240-47784411b112
+ *      example: 37a87430-461c-11ef-9c49-51993656b429
  *      schema:
  *       type: string
  *      description: Product id
@@ -109,6 +85,66 @@ router.get('/products/:id', productController.getProduct.bind(productController)
 
 /**
  * @swagger
+ * /products:
+ *  post:
+ *   summary: Creates a new product
+ *   tags:
+ *    - products     
+ *   security:
+ *    - bearerAuth: []
+ *   requestBody:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/CreateProduct'
+ *   responses:
+ *    201:
+ *     description: Product created
+ *    500:
+ *     description: Internal error
+ *    400:
+ *     description: Bad request 
+ */
+router.post('/products', auth, productController.addNewProduct.bind(productController))
+
+/**
+ * @swagger
+ * /products/{id}:
+ *  put:
+ *   summary: Updates a product
+ *   tags:
+ *    - products
+ *   security:
+ *    - bearerAuth: []
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      example: 37a87430-461c-11ef-9c49-51993656b429
+ *      schema:
+ *       type: string
+ *      description: Product id
+ *   requestBody:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/UpdateProduct'
+ *   responses:
+ *    200:
+ *     description: Product updated
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/ProductResponse'
+ *    500:
+ *     description: Internal error
+ *    404:
+ *     description: Not found 
+ */
+router.put('/products/:id', productController.updateProduct.bind(productController))
+
+/**
+ * @swagger
  * /products/{id}:
  *  delete:
  *   summary: Deletes a product
@@ -120,7 +156,7 @@ router.get('/products/:id', productController.getProduct.bind(productController)
  *    - in: path
  *      name: id
  *      required: true
- *      example: 1d391f60-45fd-11ef-a240-47784411b112
+ *      example: 37a87430-461c-11ef-9c49-51993656b429
  *      schema:
  *       type: string
  *      description: Product id

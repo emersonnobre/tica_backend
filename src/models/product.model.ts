@@ -1,5 +1,6 @@
 import { AutoMap } from '@automapper/classes'
 import { Column, Entity, PrimaryColumn } from 'typeorm'
+import { UpdateProductRequest } from '../util/requests/product/update-product.request'
 
 @Entity()
 export default class Product {
@@ -45,5 +46,20 @@ export default class Product {
 
   public inactivate() {
     this.active = false
+  }
+
+  public update(updatedProduct: UpdateProductRequest) {
+    this.name = updatedProduct.name
+    this.purchasePrice = updatedProduct.purchasePrice
+    this.salePrice = updatedProduct.salePrice
+    this.isFeedstock = updatedProduct.isFeedstock
+    this.category = updatedProduct.categoryId
+
+    this.auditUpdate(updatedProduct.updatedBy)
+  }
+
+  public auditUpdate(employeeId: number) {
+    this.updatedBy = employeeId
+    this.updatedAt = new Date()
   }
 }

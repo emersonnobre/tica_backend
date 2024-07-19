@@ -9,6 +9,7 @@ import ApiResponse from '../../util/responses/api.response';
 import { GetPaginatedProductsRequest } from '../../util/requests/product/paginated-products.request';
 import { PaginatedProductsResponse, ProductResponse } from '../../util/responses/product/paginated-products.response';
 import { mapper } from '../../util/mappings/automapper';
+import { UpdateProductRequest } from '../../util/requests/product/update-product.request';
 
 @injectable()
 export default class ProductService implements IProductService {
@@ -66,7 +67,23 @@ export default class ProductService implements IProductService {
     return new ApiResponse(true, 204, undefined)
   }
 
-  async existsWithName(name: string): Promise<boolean> {
+  async updateProduct(id: string, productRequest: UpdateProductRequest): Promise<ApiResponse<ProductResponse | null>> {
+    try {
+      const product = await this.productRepository.getProduct(id)
+      if (!product) 
+        return new ApiResponse(true, 404, 'Produto não encontrado!', null)
+
+      product.update(productRequest)
+      const updatedProduct = await this.productRepository.saveProduct(product)
+      
+      return new ApiResponse(true, 200, undefined, mapper.map(updatedProduct, Product, ProductResponse))
+    } catch (err) {
+      console.log(err)
+      return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
+    }
+  }
+
+  private async existsWithName(name: string): Promise<boolean> {
     const product = await this.productRepository.getProductByName(name)
     return !!product
   }
