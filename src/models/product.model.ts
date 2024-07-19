@@ -29,6 +29,9 @@ export default class Product {
   @Column('integer', { nullable: true })
   category: number // todo: implementar categoria
   @AutoMap()
+  @Column('boolean', { default: true })
+  active: boolean
+  @AutoMap()
   @Column('timestamp', { nullable: true })
   createdAt: Date
   @AutoMap()
@@ -40,9 +43,6 @@ export default class Product {
   @AutoMap()
   @Column('integer', { nullable: true })
   updatedBy?: number // todo: implementar funcionario
-  @AutoMap()
-  @Column('boolean', { default: true })
-  active: boolean
 
   public inactivate() {
     this.active = false
