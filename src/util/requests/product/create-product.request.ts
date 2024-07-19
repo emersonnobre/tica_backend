@@ -1,6 +1,7 @@
 export interface CreateProductRequest {
     name: string
     purchasePrice: number
-    salePrice: number
+    salePrice?: number
     stock: number
+    isFeedstock: boolean
 }

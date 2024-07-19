@@ -28,6 +28,26 @@ const productController = container.resolve(ProductController)
  */
 router.post('/products', auth, productController.addNewProduct.bind(productController))
 
+/**
+ * @swagger
+ * /products:
+ *   post:
+ *     summary: Gets filtered products paginated
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                      $ref: '#/components/schemas/CreateProduct'
+ *     responses:
+ *       200:
+ *         description: Products returned
+ *       500:
+ *         description: Internal error
+ *       400:
+ *         description: Bad request 
+ */
 router.get('/products', auth, productController.getProducts.bind(productController))
 
 router.route('/products/:id')

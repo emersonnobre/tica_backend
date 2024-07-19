@@ -17,4 +17,7 @@
  *         stock:
  *           type: number
  *           description: Stock
+ *         isFeedstock:
+ *           type: boolean
+ *           description: if is feedstock or not
  */
