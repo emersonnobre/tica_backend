@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe'
 import { CreateProductRequest } from '../util/requests/product/create-product.request'
 import ProductService from '../services/implementations/product.service'
 import IProductService from '../services/interfaces/i.product.service'
-import { PaginatedProductsRequest } from '../util/requests/product/paginated-products.request'
+import { GetPaginatedProductsRequest } from '../util/requests/product/paginated-products.request'
 
 @injectable()
 export class ProductController {
@@ -11,7 +11,7 @@ export class ProductController {
 
   async getProducts(req: Request, res: Response) {
     const { offset, limit, name, isFeedstock } = req.query
-    const filters: PaginatedProductsRequest = { 
+    const filters: GetPaginatedProductsRequest = { 
       offset: Number(offset) || 0, 
       limit: Number(limit) || 10,
       name: name?.toString() || undefined,

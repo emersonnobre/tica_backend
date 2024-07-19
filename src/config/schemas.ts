@@ -34,4 +34,43 @@
  *           description: Product category
  *           required: true
  *           example: 1
+ *     ProductResponse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: Product id
+ *         name:
+ *           type: string
+ *           description: Product name
+ *         purchasePrice:
+ *           type: number
+ *           description: Purchase price
+ *         salePrice:
+ *           type: number
+ *           description: Sale price
+ *         stock:
+ *           type: number
+ *           description: Stock
+ *         barcode:
+ *           type: string
+ *           description: barcode for sale
+ *         createdAt:
+ *           type: string
+ *           description: Creation date
+ *         createdBy:
+ *           type: number
+ *           description: Id from employee who's created the product
+ *         isFeedstock:
+ *           type: boolean
+ *           description: if is feedstock or not
+ *         categoryId:
+ *           type: number
+ *           description: Product category
+ *         updatedAt:
+ *           type: string
+ *           description: Update date
+ *         updatedBy:
+ *           type: number
+ *           description: Id from employee who's updated the product
  */

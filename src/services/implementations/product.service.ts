@@ -6,7 +6,7 @@ import IProductService from '../interfaces/i.product.service';
 import ProductRepository from '../../repositories/implementations/product.repository';
 import IProductRepository from '../../repositories/interfaces/i.product.respository';
 import ApiResponse from '../../util/responses/api.response';
-import { PaginatedProductsRequest } from '../../util/requests/product/paginated-products.request';
+import { GetPaginatedProductsRequest } from '../../util/requests/product/paginated-products.request';
 import { PaginatedProductsResponse, ProductResponse } from '../../util/responses/product/paginated-products.response';
 import { mapper } from '../../util/mappings/automapper';
 
@@ -16,7 +16,7 @@ export default class ProductService implements IProductService {
     @inject(ProductRepository) private productRepository: IProductRepository
   ) {}
 
-  async getProducts(filters: PaginatedProductsRequest): Promise<ApiResponse<PaginatedProductsResponse>> {
+  async getProducts(filters: GetPaginatedProductsRequest): Promise<ApiResponse<PaginatedProductsResponse>> {
     try {
       const products = await this.productRepository.getProducts(filters.offset, filters.limit, filters.isFeedstock, filters.name)
       const mappedProducts = products.map(product => mapper.map(product, Product, ProductResponse))
@@ -29,12 +29,13 @@ export default class ProductService implements IProductService {
     }
   }
 
-  async getProduct(id: string): Promise<ApiResponse<Product | null>> {
+  async getProduct(id: string): Promise<ApiResponse<ProductResponse | null>> {
     try {
       const product = await this.productRepository.getProduct(id)
       if (!product)
-        return new ApiResponse(true, 404, 'This product does not exists')
-      return new ApiResponse(true, 200, undefined, product)
+        return new ApiResponse(true, 404, 'Produto não encontrado!')
+      const mappedProduct = mapper.map(product, Product, ProductResponse)
+      return new ApiResponse(true, 200, undefined, mappedProduct)
     } catch (err) {
       console.log(err)
       return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')

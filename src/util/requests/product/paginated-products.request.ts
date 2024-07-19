@@ -1,4 +1,4 @@
-export interface PaginatedProductsRequest {
+export interface GetPaginatedProductsRequest {
   limit: number
   offset: number
   name?: string

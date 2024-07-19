@@ -76,8 +76,38 @@ router.post('/products', auth, productController.addNewProduct.bind(productContr
  */
 router.get('/products', auth, productController.getProducts.bind(productController))
 
+/**
+ * @swagger
+ * /products/{id}:
+ *  get:
+ *   summary: Gets a product
+ *   tags:
+ *    - products
+ *   security:
+ *    - bearerAuth: []
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      example: 1d391f60-45fd-11ef-a240-47784411b112
+ *      schema:
+ *       type: string
+ *      description: Product id
+ *   responses:
+ *    200:
+ *     description: A product
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/ProductResponse'
+ *    500:
+ *     description: Internal error
+ *    404:
+ *     description: Not found 
+ */
+router.get('/products/:id', productController.getProduct.bind(productController))
+
 router.route('/products/:id')
-  .get(productController.getProduct.bind(productController))
   .delete(productController.deleteProduct.bind(productController))
 
 export default router
