@@ -170,4 +170,36 @@ router.put('/products/:id', productController.updateProduct.bind(productControll
  */
 router.delete('/products/:id', productController.deleteProduct.bind(productController))
 
+/**
+ * @swagger
+ * /products/{id}/transaction:
+ *  post:
+ *   summary: Saves a new transaction
+ *   tags:
+ *    - products
+ *   security:
+ *    - bearerAuth: []
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      example: 37a87430-461c-11ef-9c49-51993656b429
+ *      schema:
+ *       type: string
+ *      description: Product id
+ *   requestBody:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/CreateTransaction'
+ *   responses:
+ *    201:
+ *     description: Transaction created
+ *    500:
+ *     description: Internal error
+ *    404:
+ *     description: Not found 
+ */
+router.post('/products/:id/transaction', productController.addNewTransaction.bind(productController))
+
 export default router

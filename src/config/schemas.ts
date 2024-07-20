@@ -108,4 +108,26 @@
  *           description: Id from employee who's updated the product
  *           required: true
  *           example: 1
+ *     CreateTransaction:
+ *       type: object
+ *       properties:
+ *         reason:
+ *           type: string
+ *           description: Transaction reason
+ *           required: true
+ *           example: compra
+ *         quantity:
+ *           type: number
+ *           description: Quantity of products
+ *           required: true
+ *           example: 4
+ *         type:
+ *           type: number
+ *           description: Type of transaction (0 for in and 1 for out)
+ *           example: 1
+ *         createdBy:
+ *           type: number
+ *           description: Id from employee who's created the product
+ *           required: true
+ *           example: 1
  */

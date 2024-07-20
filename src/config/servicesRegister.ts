@@ -8,9 +8,12 @@ import IUserRepository from '../repositories/interfaces/i.user.repository'
 import UserRepository from '../repositories/implementations/user.repository'
 import IUserService from '../services/interfaces/i.user.service'
 import UserService from '../services/implementations/user.service'
+import ITransactionRepository from '../repositories/interfaces/i.transaction.repository'
+import TransactionRepository from '../repositories/implementations/transaction.repository'
 
 container.registerSingleton<IProductRepository>(ProductRepository)
 container.registerSingleton<IUserRepository>(UserRepository)
+container.registerSingleton<ITransactionRepository>(TransactionRepository)
 
 container.registerSingleton<IProductService>(ProductService)
 container.registerSingleton<IUserService>(UserService)

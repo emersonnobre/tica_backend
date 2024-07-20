@@ -10,11 +10,16 @@ import { GetPaginatedProductsRequest } from '../../util/requests/product/paginat
 import { PaginatedProductsResponse, ProductResponse } from '../../util/responses/product/paginated-products.response';
 import { mapper } from '../../util/mappings/automapper';
 import { UpdateProductRequest } from '../../util/requests/product/update-product.request';
+import CreateTransactionRequest from '../../util/requests/product/create-transaction.request';
+import Transaction from '../../models/transaction.model';
+import TransactionRepository from '../../repositories/implementations/transaction.repository';
+import ITransactionRepository from '../../repositories/interfaces/i.transaction.repository';
 
 @injectable()
 export default class ProductService implements IProductService {
   constructor(
-    @inject(ProductRepository) private productRepository: IProductRepository
+    @inject(ProductRepository) private productRepository: IProductRepository,
+    @inject(TransactionRepository) private transactionRepository: ITransactionRepository,
   ) {}
 
   async getProducts(filters: GetPaginatedProductsRequest): Promise<ApiResponse<PaginatedProductsResponse>> {
@@ -77,6 +82,26 @@ export default class ProductService implements IProductService {
       const updatedProduct = await this.productRepository.saveProduct(product)
       
       return new ApiResponse(true, 200, undefined, mapper.map(updatedProduct, Product, ProductResponse))
+    } catch (err) {
+      console.log(err)
+      return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
+    }
+  }
+
+  async createTransaction(productId: string, transactionRequest: CreateTransactionRequest): Promise<ApiResponse<string | null>> {
+    try {
+      const product = await this.productRepository.getProduct(productId)
+      if (!product)
+        return new ApiResponse(true, 404, 'Produto não encontrado!', null)
+
+      const transaction: Transaction = mapper.map(transactionRequest, CreateTransactionRequest, Transaction)
+
+      product.stock = transaction.type == 0 ? product.stock + transaction.quantity : product.stock - transaction.quantity 
+      transaction.setProduct(product)
+      await this.transactionRepository.saveTransaction(transaction)
+      await this.productRepository.saveProduct(product)
+
+      return new ApiResponse(true, 201, undefined, product.id)
     } catch (err) {
       console.log(err)
       return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')

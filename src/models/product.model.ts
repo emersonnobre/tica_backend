@@ -21,7 +21,7 @@ export default class Product {
   @Column('integer')
   stock: number
   @AutoMap()
-  @Column('bool')
+  @Column('bool', { default: false })
   isFeedstock: boolean
   @AutoMap()
   @Column({ length: 100 })
@@ -36,7 +36,7 @@ export default class Product {
   @Column('timestamp', { nullable: true })
   createdAt: Date
   @AutoMap()
-  @Column('integer')
+  @Column('integer', { default: 1 })
   createdBy: number // todo: implementar funcionario
   @AutoMap()
   @Column('timestamp', { nullable: true })

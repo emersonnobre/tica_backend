@@ -4,6 +4,8 @@ import { CreateProductRequest } from '../requests/product/create-product.request
 import { v1 } from 'uuid'
 import { classes } from '@automapper/classes'
 import { ProductResponse } from '../responses/product/paginated-products.response'
+import CreateTransactionRequest from '../requests/product/create-transaction.request'
+import Transaction from '../../models/transaction.model'
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
@@ -28,5 +30,13 @@ export const configureMapper = () => {
     Product,
     ProductResponse,
     forMember(destination => destination.categoryId, mapFrom(source => source.category)),
+  )
+
+  createMap(
+    mapper,
+    CreateTransactionRequest,
+    Transaction,
+    forMember(destination => destination.id, fromValue(v1())),
+    forMember(destination => destination.createdAt, fromValue(new Date())),
   )
 }

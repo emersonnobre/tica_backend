@@ -5,6 +5,7 @@ import ProductService from '../services/implementations/product.service'
 import IProductService from '../services/interfaces/i.product.service'
 import { GetPaginatedProductsRequest } from '../util/requests/product/paginated-products.request'
 import { UpdateProductRequest } from '../util/requests/product/update-product.request'
+import CreateTransactionRequest from '../util/requests/product/create-transaction.request'
 
 @injectable()
 export class ProductController {
@@ -48,6 +49,13 @@ export class ProductController {
     const productId = req.params.id as string
     const updatedProduct: UpdateProductRequest = req.body
     const result = await this.productService.updateProduct(productId, updatedProduct);
+    res.status(result.httpStatusCode).json(result)
+  }
+
+  async addNewTransaction(req: Request, res: Response) {
+    const productId = req.params.id as string
+    const transactionRequest: CreateTransactionRequest = req.body
+    const result = await this.productService.createTransaction(productId, transactionRequest)
     res.status(result.httpStatusCode).json(result)
   }
 }

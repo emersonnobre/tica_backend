@@ -1,6 +1,5 @@
 import { AutoMap } from '@automapper/classes'
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm'
-import { UpdateProductRequest } from '../util/requests/product/update-product.request'
 import Product from './product.model'
 
 @Entity()
@@ -23,7 +22,10 @@ export default class Transaction {
   @AutoMap()
   @Column('integer')
   createdBy: number // todo: implementar funcionario
-  @AutoMap()
   @ManyToOne(() => Product, (product) => product.transactions)
-  product: number
+  product: Product
+
+  public setProduct(product: Product) {
+    this.product = product
+  }
 }
