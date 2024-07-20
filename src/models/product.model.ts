@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes'
-import { Column, Entity, PrimaryColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm'
 import { UpdateProductRequest } from '../util/requests/product/update-product.request'
+import Transaction from './transaction.model'
 
 @Entity()
 export default class Product {
@@ -43,6 +44,8 @@ export default class Product {
   @AutoMap()
   @Column('integer', { nullable: true })
   updatedBy?: number // todo: implementar funcionario
+  @OneToMany(() => Transaction, (transaction) => transaction.product)
+  transactions: Transaction[]
 
   public inactivate() {
     this.active = false
