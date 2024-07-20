@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes'
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm'
 import Product from './product.model'
+import Employee from './employee.model'
 
 @Entity()
 export default class Transaction {
@@ -19,9 +20,9 @@ export default class Transaction {
   @AutoMap()
   @Column('timestamp')
   createdAt: Date
-  @AutoMap()
-  @Column('integer')
-  createdBy: number // todo: implementar funcionario
+  @AutoMap(() => Employee)
+  @ManyToOne(() => Employee)
+  createdBy: Employee
   @ManyToOne(() => Product, (product) => product.transactions)
   product: Product
 

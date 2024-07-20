@@ -12,4 +12,8 @@ export default class Employee {
   @AutoMap()
   @Column('timestamp', { nullable: true })
   createdAt: Date
+
+  constructor (id: string) {
+    this.id = id
+  }
 }

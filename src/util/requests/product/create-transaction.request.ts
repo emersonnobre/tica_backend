@@ -7,6 +7,5 @@ export default class CreateTransactionRequest {
     quantity: number
     @AutoMap()
     type: number
-    @AutoMap()
-    createdBy: number
+    createdById: string
 }

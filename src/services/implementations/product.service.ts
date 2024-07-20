@@ -103,7 +103,11 @@ export default class ProductService implements IProductService {
     try {
       const product = await this.productRepository.getProduct(productId)
       if (!product)
-        return new ApiResponse(true, 404, 'Produto não encontrado!', null)
+        return new ApiResponse(false, 404, 'Produto não encontrado!', null)
+
+      const employee = await this.employeeRepository.getById(transactionRequest.createdById)
+      if (!employee)
+        return new ApiResponse(false, 400, 'Funcionário não encontrado!', null)
 
       const transaction: Transaction = mapper.map(transactionRequest, CreateTransactionRequest, Transaction)
 

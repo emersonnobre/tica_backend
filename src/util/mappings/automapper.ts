@@ -41,6 +41,7 @@ export const configureMapper = () => {
     Transaction,
     forMember(destination => destination.id, fromValue(v1())),
     forMember(destination => destination.createdAt, fromValue(new Date())),
+    forMember(destination => destination.createdBy, mapFrom(source => new Employee(source.createdById)))
   )
 
   createMap(

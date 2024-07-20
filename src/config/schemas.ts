@@ -130,11 +130,11 @@
  *           type: number
  *           description: Type of transaction (0 for in and 1 for out)
  *           example: 1
- *         createdBy:
- *           type: number
- *           description: Id from employee who's created the product
+ *         createdById:
+ *           type: string
+ *           description: Employee id
  *           required: true
- *           example: 1
+ *           example: c04b94f0-46d2-11ef-b732-5fe90ce03fc6
  *     CreateEmployee:
  *       type: object
  *       properties:
