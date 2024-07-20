@@ -6,6 +6,9 @@ import { classes } from '@automapper/classes'
 import { ProductResponse } from '../responses/product/paginated-products.response'
 import CreateTransactionRequest from '../requests/product/create-transaction.request'
 import Transaction from '../../models/transaction.model'
+import Employee from '../../models/employee.model'
+import GetEmployeeResponse from '../responses/employee/get-employee.response'
+import CreateEmployeeRequest from '../requests/employee/create-employee.request'
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
@@ -36,6 +39,20 @@ export const configureMapper = () => {
     mapper,
     CreateTransactionRequest,
     Transaction,
+    forMember(destination => destination.id, fromValue(v1())),
+    forMember(destination => destination.createdAt, fromValue(new Date())),
+  )
+
+  createMap(
+    mapper,
+    Employee,
+    GetEmployeeResponse
+  )
+
+  createMap(
+    mapper,
+    CreateEmployeeRequest,
+    Employee,
     forMember(destination => destination.id, fromValue(v1())),
     forMember(destination => destination.createdAt, fromValue(new Date())),
   )

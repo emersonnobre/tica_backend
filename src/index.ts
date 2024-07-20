@@ -5,6 +5,7 @@ import 'reflect-metadata'
 import express, { Express } from 'express'
 import productRoutes from './routes/product.routes'
 import userRoutes  from './routes/user.routes'
+import employeeRoutes  from './routes/employee.routes'
 import { dataSource } from './config/database'
 import swagger from './config/swagger'
 import { configureMapper } from './util/mappings/automapper'
@@ -28,7 +29,7 @@ app.use('/api-docs', swagger.swaggerUI.serve, swagger.swaggerUI.setup(swagger.sp
       },
     },
   }))
-app.use(productRoutes, userRoutes)
+app.use(productRoutes, userRoutes, employeeRoutes)
 
 app.listen(process.env.SERVER_PORT, () => {
     dataSource.initialize()

@@ -10,10 +10,13 @@ import IUserService from '../services/interfaces/i.user.service'
 import UserService from '../services/implementations/user.service'
 import ITransactionRepository from '../repositories/interfaces/i.transaction.repository'
 import TransactionRepository from '../repositories/implementations/transaction.repository'
+import IEmployeeRepository from '../repositories/interfaces/i.employee.repository'
+import EmployeeRepository from '../repositories/implementations/employee.repository'
 
 container.registerSingleton<IProductRepository>(ProductRepository)
 container.registerSingleton<IUserRepository>(UserRepository)
 container.registerSingleton<ITransactionRepository>(TransactionRepository)
+container.registerSingleton<IEmployeeRepository>(EmployeeRepository)
 
 container.registerSingleton<IProductService>(ProductService)
 container.registerSingleton<IUserService>(UserService)

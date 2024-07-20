@@ -130,4 +130,24 @@
  *           description: Id from employee who's created the product
  *           required: true
  *           example: 1
+ *     CreateEmployee:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Employee name
+ *           required: true
+ *           example: Douglas
+ *     EmployeeResponse:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Employee name
+ *         id:
+ *           type: string
+ *           description: Employee id
+ *         createdAt:
+ *           type: string
+ *           description: Created at date
  */
