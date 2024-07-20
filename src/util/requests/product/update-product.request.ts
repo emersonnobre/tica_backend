@@ -4,5 +4,5 @@ export class UpdateProductRequest {
   salePrice?: number
   isFeedstock: boolean
   categoryId: number
-  updatedBy: number
+  updatedById: string
 }

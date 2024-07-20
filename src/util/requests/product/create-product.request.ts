@@ -13,4 +13,5 @@ export class CreateProductRequest {
   stock: number
   @AutoMap()
   isFeedstock: boolean
+  createdById: string
 }

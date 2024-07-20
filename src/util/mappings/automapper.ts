@@ -20,9 +20,7 @@ export const configureMapper = () => {
     CreateProductRequest,
     Product,
     forMember(destination => destination.id, fromValue(v1())),
-    forMember(destination => destination.createdBy, fromValue(1)),
     forMember(destination => destination.barcode, fromValue('asdadsads')),
-    forMember(destination => destination.createdBy, fromValue(1)),
     forMember(destination => destination.createdAt, fromValue(new Date())),
     forMember(destination => destination.category, mapFrom(source => source.categoryId)),
     forMember(destination => destination.active, fromValue(true)),
@@ -33,6 +31,8 @@ export const configureMapper = () => {
     Product,
     ProductResponse,
     forMember(destination => destination.categoryId, mapFrom(source => source.category)),
+    forMember(destination => destination.createdBy, mapFrom(source => source.createdBy)),
+    forMember(destination => destination.updatedBy, mapFrom(source => source.updatedBy)),
   )
 
   createMap(

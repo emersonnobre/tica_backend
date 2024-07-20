@@ -17,6 +17,10 @@ export default class EmployeeRepository implements IEmployeeRepository {
     return queryBuilder.getMany()
   }
 
+  getById(id: string): Promise<Employee | null> {
+    return this._employeeRepository.createQueryBuilder().where({ id }).getOne()
+  }
+
   getByName(name: string): Promise<Employee | null> {
     const queryBuilder = this._employeeRepository.createQueryBuilder().where({ name })
     return queryBuilder.getOne()

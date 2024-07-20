@@ -1,7 +1,8 @@
 import { AutoMap } from '@automapper/classes'
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm'
 import { UpdateProductRequest } from '../util/requests/product/update-product.request'
 import Transaction from './transaction.model'
+import Employee from './employee.model'
 
 @Entity()
 export default class Product {
@@ -35,15 +36,15 @@ export default class Product {
   @AutoMap()
   @Column('timestamp', { nullable: true })
   createdAt: Date
-  @AutoMap()
-  @Column('integer', { default: 1 })
-  createdBy: number // todo: implementar funcionario
+  @AutoMap(() => Employee)
+  @ManyToOne(() => Employee, { eager: true })
+  createdBy: Employee
   @AutoMap()
   @Column('timestamp', { nullable: true })
   updatedAt?: Date
-  @AutoMap()
-  @Column('integer', { nullable: true })
-  updatedBy?: number // todo: implementar funcionario
+  @AutoMap(() => Employee)
+  @ManyToOne(() => Employee)
+  updatedBy?: Employee
   @OneToMany(() => Transaction, (transaction) => transaction.product)
   transactions: Transaction[]
 
@@ -51,18 +52,18 @@ export default class Product {
     this.active = false
   }
 
-  public update(updatedProduct: UpdateProductRequest) {
+  public update(updatedProduct: UpdateProductRequest, employee: Employee) {
     this.name = updatedProduct.name
     this.purchasePrice = updatedProduct.purchasePrice
     this.salePrice = updatedProduct.salePrice
     this.isFeedstock = updatedProduct.isFeedstock
     this.category = updatedProduct.categoryId
 
-    this.auditUpdate(updatedProduct.updatedBy)
+    this.auditUpdate(employee)
   }
 
-  public auditUpdate(employeeId: number) {
-    this.updatedBy = employeeId
+  public auditUpdate(employee: Employee) {
+    this.updatedBy = employee
     this.updatedAt = new Date()
   }
 }

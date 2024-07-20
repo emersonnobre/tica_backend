@@ -14,12 +14,15 @@ import CreateTransactionRequest from '../../util/requests/product/create-transac
 import Transaction from '../../models/transaction.model';
 import TransactionRepository from '../../repositories/implementations/transaction.repository';
 import ITransactionRepository from '../../repositories/interfaces/i.transaction.repository';
+import IEmployeeRepository from '../../repositories/interfaces/i.employee.repository';
+import EmployeeRepository from '../../repositories/implementations/employee.repository';
 
 @injectable()
 export default class ProductService implements IProductService {
   constructor(
     @inject(ProductRepository) private productRepository: IProductRepository,
     @inject(TransactionRepository) private transactionRepository: ITransactionRepository,
+    @inject(EmployeeRepository) private employeeRepository: IEmployeeRepository,
   ) {}
 
   async getProducts(filters: GetPaginatedProductsRequest): Promise<ApiResponse<PaginatedProductsResponse>> {
@@ -55,6 +58,10 @@ export default class ProductService implements IProductService {
         return new ApiResponse(false, 400, 'Já existe um produto com esse nome!')
 
       const product: Product = mapper.map(productRequest, CreateProductRequest, Product)
+      const employee = await this.employeeRepository.getById(productRequest.createdById)
+      if (!employee)
+        return new ApiResponse(false, 400, 'Funcionário não encontrado!')
+      product.createdBy = employee
       this.productRepository.saveProduct(product)
       return new ApiResponse(true, 201, undefined, product.id)
     } catch (err) {
@@ -77,8 +84,12 @@ export default class ProductService implements IProductService {
       const product = await this.productRepository.getProduct(id)
       if (!product) 
         return new ApiResponse(true, 404, 'Produto não encontrado!', null)
+      // todo: implementar módulo separado de validações
+      const employee = await this.employeeRepository.getById(productRequest.updatedById)
+      if (!employee) 
+        return new ApiResponse(true, 400, 'Funcionário não encontrado!', null)
 
-      product.update(productRequest)
+      product.update(productRequest, employee)
       const updatedProduct = await this.productRepository.saveProduct(product)
       
       return new ApiResponse(true, 200, undefined, mapper.map(updatedProduct, Product, ProductResponse))

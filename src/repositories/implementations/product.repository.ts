@@ -30,8 +30,11 @@ export default class ProductRepository implements IProductRepository {
   }
 
   getProduct(id: string): Promise<Product | null> {
-    const queryBuilder = this._productRepository.createQueryBuilder()
-    queryBuilder.where({ active: true }).andWhere({ id })
+    const queryBuilder = this._productRepository.createQueryBuilder('product')
+    queryBuilder
+    .leftJoinAndSelect('product.createdBy', 'employee')
+    .leftJoinAndSelect('product.updatedBy', 'employeeUp')
+    .where({ active: true }).andWhere({ id })
     return queryBuilder.getOne()
   }
 

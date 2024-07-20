@@ -1,4 +1,5 @@
 import { AutoMap } from '@automapper/classes'
+import GetEmployeeResponse from '../employee/get-employee.response'
 
 export interface PaginatedProductsResponse {
   products: Array<ProductResponse>
@@ -20,16 +21,16 @@ export class ProductResponse {
   barcode: string
   @AutoMap()
   createdAt: Date
-  @AutoMap()
-  createdBy: number
+  @AutoMap(() => GetEmployeeResponse)
+  createdBy: GetEmployeeResponse
   @AutoMap()
   isFeedstock: boolean
   @AutoMap()
   categoryId?: number
   @AutoMap()
   updatedAt?: Date
-  @AutoMap()
-  updatedBy?: number
+  @AutoMap(() => GetEmployeeResponse)
+  updatedBy?: GetEmployeeResponse
   @AutoMap()
   active: boolean
 }

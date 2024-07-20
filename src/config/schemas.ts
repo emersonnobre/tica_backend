@@ -34,6 +34,11 @@
  *           description: Product category
  *           required: true
  *           example: 1
+ *         createdById:
+ *           type: string
+ *           description: Employee id
+ *           required: true
+ *           example: c04b94f0-46d2-11ef-b732-5fe90ce03fc6
  *     ProductResponse:
  *       type: object
  *       properties:
@@ -59,7 +64,7 @@
  *           type: string
  *           description: Creation date
  *         createdBy:
- *           type: number
+ *           $ref: '#/components/schemas/EmployeeResponse'
  *           description: Id from employee who's created the product
  *         isFeedstock:
  *           type: boolean
@@ -71,7 +76,7 @@
  *           type: string
  *           description: Update date
  *         updatedBy:
- *           type: number
+ *           $ref: '#/components/schemas/EmployeeResponse'
  *           description: Id from employee who's updated the product
  *         active:
  *           type: boolean
@@ -103,11 +108,11 @@
  *           description: Product category
  *           required: true
  *           example: 1
- *         updatedBy:
- *           type: number
+ *         updatedById:
+ *           type: string
  *           description: Id from employee who's updated the product
  *           required: true
- *           example: 1
+ *           example: c04b94f0-46d2-11ef-b732-5fe90ce03fc6
  *     CreateTransaction:
  *       type: object
  *       properties:
