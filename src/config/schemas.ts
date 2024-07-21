@@ -81,6 +81,24 @@
  *         active:
  *           type: boolean
  *           description: if the product is active or not
+ *     ProductShortResponse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: Product id
+ *         name:
+ *           type: string
+ *           description: Product name
+ *         stock:
+ *           type: number
+ *           description: Stock
+ *         isFeedstock:
+ *           type: boolean
+ *           description: if is feedstock or not
+ *         categoryId:
+ *           type: number
+ *           description: Product category
  *     UpdateProduct:
  *       type: object
  *       properties:
@@ -155,4 +173,25 @@
  *         createdAt:
  *           type: string
  *           description: Created at date
+ *     TransactionResponse:
+ *       type: object
+ *       properties:
+ *         reason:
+ *           type: string
+ *           description: Transaction reason
+ *         id:
+ *           type: string
+ *           description: Transaction quantity
+ *         createdAt:
+ *           type: string
+ *           description: Created at date
+ *         type:
+ *           type: number
+ *           description: Type of transaction (0 for in and 1 for out)
+ *         createdBy:
+ *           $ref: '#/components/schemas/EmployeeResponse'
+ *           description: Id from employee who's created the transaction
+ *         product:
+ *           $ref: '#/components/schemas/ProductShortResponse'
+ *           description: Product
  */

@@ -5,4 +5,5 @@ import GetTransactionsFilter from '../../util/requests/product/get-transactions.
 export default interface ITransactionRepository {
   saveTransaction(newTransaction: Transaction): Promise<Transaction>
   getTransactions(filters: PaginationFilter<GetTransactionsFilter>): Promise<Array<Transaction>>
+  getCountTransactions(filters: PaginationFilter<GetTransactionsFilter>): Promise<number>
 }

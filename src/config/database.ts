@@ -14,4 +14,5 @@ export const dataSource = new DataSource({
     synchronize: true,
     entities: [Product, User, Transaction, Employee],
     logging: true,
+    useUTC: false
 })

@@ -10,6 +10,7 @@ import Employee from '../../models/employee.model'
 import GetEmployeeResponse from '../responses/employee/get-employee.response'
 import CreateEmployeeRequest from '../requests/employee/create-employee.request'
 import GetTransactionsResponse from '../responses/product/get-transactions.response'
+import { GetProductsResponse } from '../responses/product/get-products.response'
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
@@ -38,10 +39,17 @@ export const configureMapper = () => {
 
   createMap(
     mapper,
+    Product,
+    GetProductsResponse,
+    forMember(destination => destination.categoryId, mapFrom(source => source.category)),
+  )
+
+  createMap(
+    mapper,
     CreateTransactionRequest,
     Transaction,
     forMember(destination => destination.id, fromValue(v1())),
-    forMember(destination => destination.createdAt, fromValue(new Date())),
+    forMember(destination => destination.createdAt, fromValue(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()))),
     forMember(destination => destination.createdBy, mapFrom(source => new Employee(source.createdById)))
   )
 

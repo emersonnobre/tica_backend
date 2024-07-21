@@ -5,5 +5,5 @@ import PaginatedResponse from '../../util/responses/comum/paginated.response'
 import GetTransactionsResponse from '../../util/responses/product/get-transactions.response'
 
 export default interface ITransactionService {
-  getTransactions(transactionFilterRequest: PaginationFilter<GetTransactionsFilter>): Promise<ApiResponse<PaginatedResponse<GetTransactionsResponse>>>
+  getTransactions(transactionFilterRequest: PaginationFilter<GetTransactionsFilter>): Promise<ApiResponse<PaginatedResponse<GetTransactionsResponse[]>>>
 }

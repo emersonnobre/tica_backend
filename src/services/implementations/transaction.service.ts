@@ -14,12 +14,19 @@ import Transaction from '../../models/transaction.model';
 export default class TransactionService implements ITransactionService {
   constructor (@inject(TransactionRepository) private transactionRepository: ITransactionRepository) {}
 
-  async getTransactions(transactionFilterRequest: PaginationFilter<GetTransactionsFilter>): Promise<ApiResponse<PaginatedResponse<GetTransactionsResponse>>> {
+  async getTransactions(transactionFilterRequest: PaginationFilter<GetTransactionsFilter>): Promise<ApiResponse<PaginatedResponse<GetTransactionsResponse[]>>> {
     try {
       const transactions = await this.transactionRepository.getTransactions(transactionFilterRequest)
-      console.log('\n\n', transactions.map(transaction => mapper.map(transaction, Transaction, GetTransactionsResponse)), '\n\n')
+      const mappedTransactions = transactions.map(transaction => mapper.map(transaction, Transaction, GetTransactionsResponse))
 
-      return new ApiResponse(true, 200, 'Ok')
+      const paginatedResponse: PaginatedResponse<GetTransactionsResponse[]> = {
+        limit: transactionFilterRequest.limit,
+        offset: transactionFilterRequest.offset,
+        data: mappedTransactions,
+        totalCount: await this.transactionRepository.getCountTransactions(transactionFilterRequest)
+      }
+
+      return new ApiResponse(true, 200, undefined, paginatedResponse)
     } catch (err) {
       console.log(err)
       return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')

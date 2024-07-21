@@ -18,8 +18,8 @@ export default class Transaction {
   @Column('bit')
   type: number
   @AutoMap()
-  @Column('timestamp')
-  createdAt: Date
+  @Column('timestamp', { nullable: true})
+  createdAt?: Date
   @AutoMap(() => Employee)
   @ManyToOne(() => Employee)
   createdBy: Employee

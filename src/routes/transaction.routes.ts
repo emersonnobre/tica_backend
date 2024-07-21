@@ -57,6 +57,12 @@ const transactionController = container.resolve(TransactionController)
  *   responses:
  *    200:
  *     description: A list of transactions
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: array
+ *        items:
+ *         $ref: '#/components/schemas/TransactionResponse'
  *    500:
  *     description: Internal error
  *    404:

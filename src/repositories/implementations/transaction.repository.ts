@@ -30,8 +30,31 @@ export default class TransactionRepository implements ITransactionRepository {
       queryBuilder.andWhere({ type: filters.filter.type })
     if (filters.filter.productId)
       queryBuilder.andWhere('product.id = :id', { id: filters.filter.productId })
+    if (filters.filter.startDate)
+      queryBuilder.andWhere('Transaction.createdAt >= :startDate', { startDate: filters.filter.startDate})
+    if (filters.filter.endDate)
+      queryBuilder.andWhere('Transaction.createdAt <= :endDate', { endDate: filters.filter.endDate})
 
     queryBuilder.orderBy('product.id', 'ASC').skip(filters.offset).take(filters.limit)
     return queryBuilder.getMany()
+  }
+
+  getCountTransactions(filters: PaginationFilter<GetTransactionsFilter>): Promise<number> {
+    const queryBuilder = this._transactionRepository.createQueryBuilder()
+
+    queryBuilder
+      .leftJoinAndSelect('Transaction.product', 'product')
+      .where({})
+    
+    if (filters.filter.type)
+      queryBuilder.andWhere({ type: filters.filter.type })
+    if (filters.filter.productId)
+      queryBuilder.andWhere('product.id = :id', { id: filters.filter.productId })
+    if (filters.filter.startDate)
+      queryBuilder.andWhere('Transaction.createdAt >= :startDate', { startDate: filters.filter.startDate})
+    if (filters.filter.endDate)
+      queryBuilder.andWhere('Transaction.createdAt <= :endDate', { endDate: filters.filter.endDate})
+
+    return queryBuilder.getCount()
   }
 }

@@ -18,7 +18,7 @@ export class TransactionController {
         productId: productId?.toString() || undefined, 
         startDate: startDate ? new Date(startDate.toString()) : undefined, 
         endDate: endDate ? new Date(endDate.toString()) : undefined,
-        type: typeof(type) == 'number' ? type : undefined
+        type: Number(type) || undefined
       }
     }
     const result = await this.transactionService.getTransactions(filters)
