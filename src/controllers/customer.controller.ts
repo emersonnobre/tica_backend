@@ -3,6 +3,8 @@ import { inject, injectable } from 'tsyringe'
 import CustomerService from '../services/implementations/customer.service'
 import ICustomerService from '../services/interfaces/i.customer.service'
 import CreateCustomerRequest from '../util/requests/customer/create-customer.request'
+import PaginationFilter from '../util/requests/comum/pagination.filter.request'
+import GetCustomersFilter from '../util/requests/customer/get-customers.filter.request'
 
 @injectable()
 export class CustomerController {
@@ -14,8 +16,17 @@ export class CustomerController {
     res.status(result.httpStatusCode).json(result)
   }
 
-  // async getCustomers(_: Request, res: Response) {
-  //   const result = await this.customerService.get()
-  //   res.status(result.httpStatusCode).json(result)
-  // }
+  async get(req: Request, res: Response) {
+    const { offset, limit, name, cpf } = req.query
+    const filters: PaginationFilter<GetCustomersFilter> = { 
+      offset: Number(offset) || 0, 
+      limit: Number(limit) || 10,
+      filter: { 
+        name: name?.toString() || undefined, 
+        cpf: cpf?.toString() || undefined,
+      }
+    }
+    const result = await this.customerService.get(filters)
+    res.status(result.httpStatusCode).json(result)
+  }
 }

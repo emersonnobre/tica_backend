@@ -301,4 +301,22 @@
  *           items:
  *             $ref: '#/components/schemas/GetAddressResponse'
  *           description: Addresses
+ *     GetCustomerShortResponse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           description: Id
+ *         name:
+ *           type: string
+ *           description: Name
+ *         cpf:
+ *           type: string
+ *           description: CPF
+ *         createdAt:
+ *           type: string
+ *           description: Created date
+ *         updatedAt:
+ *           type: string
+ *           description: Updated date
  */

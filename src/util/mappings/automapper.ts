@@ -17,6 +17,7 @@ import { CreateAddressRequest } from '../requests/customer/create-address.reques
 import Address from '../../models/address.model'
 import { GetAddressResponse } from '../responses/customer/get-address.response'
 import GetCustomerResponse from '../responses/customer/get-customer.response'
+import GetCustomerShortResponse from '../responses/customer/get-customer-short.response'
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
@@ -103,5 +104,11 @@ export const configureMapper = () => {
     mapper,
     Customer,
     GetCustomerResponse
+  )
+
+  createMap(
+    mapper,
+    Customer,
+    GetCustomerShortResponse
   )
 }
