@@ -319,4 +319,60 @@
  *         updatedAt:
  *           type: string
  *           description: Updated date
+ *     UpdateAddressRequest:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           description: Id
+ *           example: 1
+ *         street:
+ *           type: string
+ *           description: Street and number
+ *           example: Tv egn renner, 66
+ *         neighborhood:
+ *           type: string
+ *           description: Neighborhood
+ *           example: Jardim Parati
+ *         cep:
+ *           type: string
+ *           description: CEP
+ *           example: 79088654
+ *     UpdateCustomerRequest:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           required: true
+ *           description: Name
+ *           example: Emerson Nobre
+ *         phone:
+ *           type: string
+ *           description: Phone without mask and with DDD
+ *           example: 06369196177
+ *         email:
+ *           type: string
+ *           description: E-mail
+ *           example: emerson@exampl3.com
+ *         socialMedia:
+ *           type: string
+ *           description: Social media
+ *           example: user_emerson
+ *         birthday:
+ *           type: string
+ *           description: Birthday date
+ *           example: 2003-03-20
+ *         wishList:
+ *           type: string
+ *           description: wishList
+ *           example: prato azul, copos...
+ *         updatedById:
+ *           type: string
+ *           description: Employee id
+ *           example: 0a512151-46ec-11ef-8b5c-29dfdea92ef1
+ *         addresses:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/UpdateAddressRequest'
+ *           description: Addresses
  */

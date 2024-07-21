@@ -117,4 +117,36 @@ router.get('/customers', auth, customerController.get.bind(customerController))
  */
 router.get('/customers/:id', auth, customerController.getById.bind(customerController))
 
+/**
+ * @swagger
+ * /customers/{id}:
+ *  put:
+ *   summary: Updates a customer
+ *   tags:
+ *    - customers
+ *   security:
+ *    - bearerAuth: []
+ *   requestBody:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/UpdateCustomerRequest'
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      example: 1
+ *      schema:
+ *       type: number
+ *      description: Customer id
+ *   responses:
+ *    204:
+ *     description: Customer updated
+ *    500:
+ *     description: Internal error
+ *    404:
+ *     description: Not found
+ */
+router.put('/customers/:id', auth, customerController.update.bind(customerController))
+
 export default router

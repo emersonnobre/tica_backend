@@ -12,10 +12,16 @@ import GetCustomersFilter from '../../util/requests/customer/get-customers.filte
 import PaginatedResponse from '../../util/responses/comum/paginated.response';
 import GetCustomerShortResponse from '../../util/responses/customer/get-customer-short.response';
 import PaginationFilter from '../../util/requests/comum/pagination.filter.request';
+import UpdateCustomerRequest from '../../util/requests/customer/update-customer.request';
+import EmployeeRepository from '../../repositories/implementations/employee.repository';
+import IEmployeeRepository from '../../repositories/interfaces/i.employee.repository';
 
 @injectable()
 export default class CustomerService implements ICustomerService {
-  constructor(@inject(CustomerRepository) private _customerRepository: ICustomerRepository) { }
+  constructor(
+    @inject(CustomerRepository) private _customerRepository: ICustomerRepository,
+    @inject(EmployeeRepository) private _employeeRepository: IEmployeeRepository,
+  ) { }
  
   async getById(id: number): Promise<ApiResponse<GetCustomerResponse | null>> {
     try {
@@ -59,6 +65,25 @@ export default class CustomerService implements ICustomerService {
     } catch (err) {
       console.log(err)
       return new ApiResponse<GetCustomerResponse>(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
+    }
+  }
+
+  async update(id: number, request: UpdateCustomerRequest): Promise<ApiResponse<undefined>> {
+    try {
+      const customer = await this._customerRepository.getById(id)
+      if (!customer)
+        return new ApiResponse<undefined>(false, 404, 'Cliente não encontrado!')
+
+      const employee = await this._employeeRepository.getById(request.updatedById)
+      if (!employee)
+        return new ApiResponse<undefined>(false, 404, 'Funcionário não encontrado!')
+
+      customer.update(request, employee)
+      this._customerRepository.save(customer)
+      return new ApiResponse<undefined>(true, 204, undefined, undefined)
+    } catch (err) {
+      console.log(err)
+      return new ApiResponse<undefined>(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
     }
   }
 }

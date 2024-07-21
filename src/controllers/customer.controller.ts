@@ -5,6 +5,7 @@ import ICustomerService from '../services/interfaces/i.customer.service'
 import CreateCustomerRequest from '../util/requests/customer/create-customer.request'
 import PaginationFilter from '../util/requests/comum/pagination.filter.request'
 import GetCustomersFilter from '../util/requests/customer/get-customers.filter.request'
+import UpdateCustomerRequest from '../util/requests/customer/update-customer.request'
 
 @injectable()
 export class CustomerController {
@@ -35,4 +36,12 @@ export class CustomerController {
     const result = await this.customerService.getById(Number(id))
     res.status(result.httpStatusCode).json(result)
   }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params
+    const request: UpdateCustomerRequest = req.body
+    const result = await this.customerService.update(Number(id), request)
+    res.status(result.httpStatusCode).json(result)
+  }
+
 }

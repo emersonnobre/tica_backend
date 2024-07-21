@@ -2,6 +2,7 @@ import { AutoMap } from '@automapper/classes'
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import Address from './address.model'
 import Employee from './employee.model'
+import UpdateCustomerRequest from '../util/requests/customer/update-customer.request'
 
 @Entity()
 export default class Customer {
@@ -28,13 +29,13 @@ export default class Customer {
   wishList?: string
   @AutoMap()
   @Column({ type: 'date', nullable: true })
-  birthday?: Date
+  birthday?: Date // todo verificar pq ta salvando com um dia a menos
   @AutoMap()
   @Column({ type: 'timestamp' })
   createdAt: Date
   @AutoMap()
   @Column({ type: 'date', nullable: true })
-  updatedAt?: Date
+  updatedAt?: Date // todo alterar para timestamp
   @AutoMap(() => Address)
   @OneToMany(() => Address, (address) => address.customer, { cascade: true })
   addresses: Address[]
@@ -44,4 +45,28 @@ export default class Customer {
   @AutoMap(() => Employee)
   @ManyToOne(() => Employee)
   updatedBy?: Employee
+
+  public update(request: UpdateCustomerRequest, employee: Employee) {
+    this.name = request.name
+    this.email = request.email
+    this.birthday = request.birthday ? new Date(request.birthday) : undefined
+    this.phone = request.phone
+    this.socialMedia = request.socialMedia
+    this.wishList = request.wishList
+
+    this.auditUpdate(employee)
+  }
+
+  public auditUpdate(employee: Employee) {
+    this.updatedBy = employee
+    this.updatedAt = new Date()
+  }
+
+  public addAddresses(addresses: Address[]) {
+    addresses.forEach(address => this.addresses.push(address))
+  }
+
+  public removeAddresses(addressesToRemove: Address[]) {
+    this.addresses = this.addresses.filter(address => !addressesToRemove.find(x => x.id == address.id))
+  }
 }
