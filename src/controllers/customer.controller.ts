@@ -29,4 +29,10 @@ export class CustomerController {
     const result = await this.customerService.get(filters)
     res.status(result.httpStatusCode).json(result)
   }
+
+  async getById(req: Request, res: Response) {
+    const { id } = req.params
+    const result = await this.customerService.getById(Number(id))
+    res.status(result.httpStatusCode).json(result)
+  }
 }

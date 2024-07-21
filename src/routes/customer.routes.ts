@@ -86,4 +86,35 @@ router.post('/customers', auth, customerController.createCustomer.bind(customerC
  */
 router.get('/customers', auth, customerController.get.bind(customerController))
 
+/**
+ * @swagger
+ * /customers/{id}:
+ *  get:
+ *   summary: Gets a customer
+ *   tags:
+ *    - customers
+ *   security:
+ *    - bearerAuth: []
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      example: 1
+ *      schema:
+ *       type: number
+ *      description: Customer id
+ *   responses:
+ *    200:
+ *     description: A  customer
+ *     content:
+ *      application/json:
+ *       schema:
+ *         $ref: '#/components/schemas/GetCustomerResponse'
+ *    500:
+ *     description: Internal error
+ *    404:
+ *     description: Not found
+ */
+router.get('/customers/:id', auth, customerController.getById.bind(customerController))
+
 export default router

@@ -14,6 +14,13 @@ export default class CustomerRepository implements ICustomerRepository {
     this._customerRepository = dataSource.getRepository(Customer)
   }
 
+  getById(id: number): Promise<Customer | null> {
+    return this._customerRepository.createQueryBuilder()
+      .innerJoinAndSelect('Customer.createdBy', 'employee')
+      .leftJoinAndSelect('Customer.addresses', 'address')
+      .where({ id }).getOne()
+  }
+
   get(filters: PaginationFilter<GetCustomersFilter>): Promise<Array<Customer>> {
     const queryBuilder = this._customerRepository.createQueryBuilder()
 

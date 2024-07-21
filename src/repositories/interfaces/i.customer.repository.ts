@@ -5,5 +5,6 @@ import GetCustomersFilter from '../../util/requests/customer/get-customers.filte
 export default interface ICustomerRepository {
   get(filters: PaginationFilter<GetCustomersFilter>): Promise<Array<Customer>>
   getCount(filters: PaginationFilter<GetCustomersFilter>): Promise<number>
+  getById(id: number): Promise<Customer | null>
   save(customer: Customer): Promise<Customer>
 }

@@ -16,6 +16,19 @@ import PaginationFilter from '../../util/requests/comum/pagination.filter.reques
 @injectable()
 export default class CustomerService implements ICustomerService {
   constructor(@inject(CustomerRepository) private _customerRepository: ICustomerRepository) { }
+ 
+  async getById(id: number): Promise<ApiResponse<GetCustomerResponse | null>> {
+    try {
+      const customer = await this._customerRepository.getById(id)
+      if (!customer)
+        return new ApiResponse(false, 404, 'Cliente não encontrado!')
+      const mappedCustomer = mapper.map(customer, Customer, GetCustomerResponse)
+      return new ApiResponse(true, 200, undefined, mappedCustomer)
+    } catch (err) {
+      console.log(err)
+      return new ApiResponse(false, 500, 'Um erro ocorreu! Contate os desenvolvedores.')
+    }
+  }
 
   async get(customerFilterRequest: PaginationFilter<GetCustomersFilter>): Promise<ApiResponse<PaginatedResponse<GetCustomerShortResponse[]>>> {
     try {

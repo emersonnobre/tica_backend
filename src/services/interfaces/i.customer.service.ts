@@ -8,5 +8,6 @@ import GetCustomerResponse from '../../util/responses/customer/get-customer.resp
 
 export default interface ICustomerService {
   get(customerFilterRequest: PaginationFilter<GetCustomersFilter>): Promise<ApiResponse<PaginatedResponse<GetCustomerShortResponse[]>>>
+  getById(id: number): Promise<ApiResponse<GetCustomerResponse | null>>
   create(request: CreateCustomerRequest): Promise<ApiResponse<GetCustomerResponse>>
 }
