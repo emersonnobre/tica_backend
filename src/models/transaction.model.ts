@@ -23,7 +23,8 @@ export default class Transaction {
   @AutoMap(() => Employee)
   @ManyToOne(() => Employee)
   createdBy: Employee
-  @ManyToOne(() => Product, (product) => product.transactions)
+  @AutoMap(() => Product)
+  @ManyToOne(() => Product, (product) => product.transactions, { eager: true })
   product: Product
 
   public setProduct(product: Product) {

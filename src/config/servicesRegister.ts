@@ -12,6 +12,8 @@ import ITransactionRepository from '../repositories/interfaces/i.transaction.rep
 import TransactionRepository from '../repositories/implementations/transaction.repository'
 import IEmployeeRepository from '../repositories/interfaces/i.employee.repository'
 import EmployeeRepository from '../repositories/implementations/employee.repository'
+import ITransactionService from '../services/interfaces/i.transaction.service'
+import TransactionService from '../services/implementations/transaction.service'
 
 container.registerSingleton<IProductRepository>(ProductRepository)
 container.registerSingleton<IUserRepository>(UserRepository)
@@ -20,5 +22,6 @@ container.registerSingleton<IEmployeeRepository>(EmployeeRepository)
 
 container.registerSingleton<IProductService>(ProductService)
 container.registerSingleton<IUserService>(UserService)
+container.registerSingleton<ITransactionService>(TransactionService)
 
 container.registerSingleton(ProductController)

@@ -9,6 +9,7 @@ import Transaction from '../../models/transaction.model'
 import Employee from '../../models/employee.model'
 import GetEmployeeResponse from '../responses/employee/get-employee.response'
 import CreateEmployeeRequest from '../requests/employee/create-employee.request'
+import GetTransactionsResponse from '../responses/product/get-transactions.response'
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
@@ -56,5 +57,11 @@ export const configureMapper = () => {
     Employee,
     forMember(destination => destination.id, fromValue(v1())),
     forMember(destination => destination.createdAt, fromValue(new Date())),
+  )
+
+  createMap(
+    mapper,
+    Transaction,
+    GetTransactionsResponse
   )
 }
