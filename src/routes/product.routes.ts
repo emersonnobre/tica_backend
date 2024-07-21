@@ -172,7 +172,7 @@ router.delete('/products/:id', productController.deleteProduct.bind(productContr
 
 /**
  * @swagger
- * /products/{id}/transaction:
+ * /products/{id}/transactions:
  *  post:
  *   summary: Saves a new transaction
  *   tags:
@@ -200,6 +200,6 @@ router.delete('/products/:id', productController.deleteProduct.bind(productContr
  *    404:
  *     description: Not found 
  */
-router.post('/products/:id/transaction', productController.addNewTransaction.bind(productController))
+router.post('/products/:id/transactions', productController.addNewTransaction.bind(productController))
 
 export default router

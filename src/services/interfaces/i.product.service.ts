@@ -6,10 +6,10 @@ import ApiResponse from '../../util/responses/api.response'
 import { PaginatedProductsResponse, ProductResponse } from '../../util/responses/product/paginated-products.response'
 
 export default interface IProductService {
-    getProducts(filters: GetPaginatedProductsRequest): Promise<ApiResponse<PaginatedProductsResponse>>
-    getProduct(id: string): Promise<ApiResponse<ProductResponse | null>>
-    createProduct(newProduct: CreateProductRequest): Promise<ApiResponse<string | null>>
-    deleteProduct(id: string): Promise<ApiResponse<void>>
-    updateProduct(id: string, productRequest: UpdateProductRequest): Promise<ApiResponse<ProductResponse | null>>
-    createTransaction(productId: string, transactionRequest: CreateTransactionRequest): Promise<ApiResponse<string | null>>
+  getProducts(filters: GetPaginatedProductsRequest): Promise<ApiResponse<PaginatedProductsResponse>>
+  getProduct(id: string): Promise<ApiResponse<ProductResponse | null>>
+  createProduct(newProduct: CreateProductRequest): Promise<ApiResponse<string | null>>
+  deleteProduct(id: string): Promise<ApiResponse<void>>
+  updateProduct(id: string, productRequest: UpdateProductRequest): Promise<ApiResponse<ProductResponse | null>>
+  createTransaction(productId: string, transactionRequest: CreateTransactionRequest): Promise<ApiResponse<string | null>>
 }
