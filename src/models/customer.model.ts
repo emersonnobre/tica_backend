@@ -7,7 +7,7 @@ import Employee from './employee.model'
 export default class Customer {
   @AutoMap()
   @PrimaryGeneratedColumn('identity')
-  id: string
+  id: number
   @AutoMap()
   @Column({ length: 100 })
   name: string
@@ -16,24 +16,27 @@ export default class Customer {
   cpf: string
   @AutoMap()
   @Column({ length: 20, nullable: true })
-  phone: string
+  phone?: string
   @AutoMap()
   @Column({ length: 100, nullable: true })
-  email: string
+  email?: string
   @AutoMap()
   @Column({ length: 70, nullable: true })
-  socialMedia: string
+  socialMedia?: string
+  @AutoMap()
+  @Column({ length: 1000, nullable: true })
+  wishList?: string
   @AutoMap()
   @Column({ type: 'date', nullable: true })
-  birthday: Date
+  birthday?: Date
   @AutoMap()
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   createdAt: Date
   @AutoMap()
-  @Column({ type: 'date' })
-  updatedAt: Date
+  @Column({ type: 'date', nullable: true })
+  updatedAt?: Date
   @AutoMap(() => Address)
-  @OneToMany(() => Address, (address) => address.customer)
+  @OneToMany(() => Address, (address) => address.customer, { cascade: true })
   addresses: Address[]
   @AutoMap(() => Employee)
   @ManyToOne(() => Employee)

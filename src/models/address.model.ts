@@ -6,7 +6,7 @@ import Customer from './customer.model'
 export default class Address {
   @AutoMap()
   @PrimaryGeneratedColumn('identity')
-  id: string
+  id: number
   @AutoMap()
   @Column({ length: 200 })
   street: string
@@ -15,7 +15,7 @@ export default class Address {
   neighborhood: string
   @AutoMap()
   @Column({ length: 8, nullable: true })
-  cep: string
+  cep?: string
   @AutoMap(() => Customer)
   @ManyToOne(() => Customer, (customer) => customer.addresses)
   customer: Customer

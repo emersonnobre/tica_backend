@@ -194,4 +194,111 @@
  *         product:
  *           $ref: '#/components/schemas/ProductShortResponse'
  *           description: Product
+ *     CreateAddressRequest:
+ *       type: object
+ *       properties:
+ *         street:
+ *           required: true
+ *           type: string
+ *           description: Street and number
+ *         neighborhood:
+ *           required: true
+ *           type: string
+ *           description: Neighborhood
+ *         cep:
+ *           type: string
+ *           description: CEP
+ *     CreateCustomerRequest:
+ *       type: object
+ *       properties:
+ *         name:
+ *           required: true
+ *           type: string
+ *           description: Name
+ *         cpf:
+ *           required: true
+ *           type: string
+ *           description: CPF without mask
+ *         phone:
+ *           type: string
+ *           description: Phone without mask and with DDD
+ *         email:
+ *           type: string
+ *           description: E-mail
+ *         socialMedia:
+ *           type: string
+ *           description: Social media
+ *         birthday:
+ *           type: string
+ *           description: Birthday date
+ *         wishList:
+ *           type: string
+ *           description: wishList
+ *         createdById:
+ *           type: string
+ *           description: Employee id
+ *         addresses:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/CreateAddressRequest'
+ *           description: Addresses
+ *     GetAddressResponse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           description: Id
+ *         street:
+ *           type: string
+ *           description: Street and number
+ *         neighborhood:
+ *           type: string
+ *           description: Neighborhood
+ *         cep:
+ *           type: string
+ *           description: CEP
+ *     GetCustomerResponse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           description: Id
+ *         name:
+ *           type: string
+ *           description: Name
+ *         cpf:
+ *           type: string
+ *           description: CPF without mask
+ *         phone:
+ *           type: string
+ *           description: Phone without mask and with DDD
+ *         email:
+ *           type: string
+ *           description: E-mail
+ *         socialMedia:
+ *           type: string
+ *           description: Social media
+ *         birthday:
+ *           type: string
+ *           description: Birthday date
+ *         wishList:
+ *           type: string
+ *           description: wishList
+ *         createdAt:
+ *           type: string
+ *           description: Created at date
+ *         updatedAt:
+ *           type: string
+ *           description: Updated at date
+ *         createdBy:
+ *           $ref: '#/components/schemas/EmployeeResponse'
+ *           description: Id from employee who's created the customer
+ *         updatedBy:
+ *           $ref: '#/components/schemas/EmployeeResponse'
+ *           description: Id from employee who's updated the customer
+ *         addresses:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/GetAddressResponse'
+ *           description: Addresses
  */

@@ -11,6 +11,12 @@ import GetEmployeeResponse from '../responses/employee/get-employee.response'
 import CreateEmployeeRequest from '../requests/employee/create-employee.request'
 import GetTransactionsResponse from '../responses/product/get-transactions.response'
 import { GetProductsResponse } from '../responses/product/get-products.response'
+import CreateCustomerRequest from '../requests/customer/create-customer.request'
+import Customer from '../../models/customer.model'
+import { CreateAddressRequest } from '../requests/customer/create-address.request'
+import Address from '../../models/address.model'
+import { GetAddressResponse } from '../responses/customer/get-address.response'
+import GetCustomerResponse from '../responses/customer/get-customer.response'
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
@@ -49,7 +55,7 @@ export const configureMapper = () => {
     CreateTransactionRequest,
     Transaction,
     forMember(destination => destination.id, fromValue(v1())),
-    forMember(destination => destination.createdAt, fromValue(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()))),
+    forMember(destination => destination.createdAt, fromValue(new Date())),
     forMember(destination => destination.createdBy, mapFrom(source => new Employee(source.createdById)))
   )
 
@@ -71,5 +77,31 @@ export const configureMapper = () => {
     mapper,
     Transaction,
     GetTransactionsResponse
+  )
+
+  createMap(
+    mapper,
+    CreateAddressRequest,
+    Address
+  )
+
+  createMap(
+    mapper,
+    CreateCustomerRequest,
+    Customer,
+    forMember(destination => destination.createdAt, fromValue(new Date())),
+    forMember(destination => destination.createdBy, mapFrom(source => new Employee(source.createdById))),
+  )
+
+  createMap(
+    mapper,
+    Address,
+    GetAddressResponse
+  )
+
+  createMap(
+    mapper,
+    Customer,
+    GetCustomerResponse
   )
 }

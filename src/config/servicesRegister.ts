@@ -14,14 +14,20 @@ import IEmployeeRepository from '../repositories/interfaces/i.employee.repositor
 import EmployeeRepository from '../repositories/implementations/employee.repository'
 import ITransactionService from '../services/interfaces/i.transaction.service'
 import TransactionService from '../services/implementations/transaction.service'
+import ICustomerRepository from '../repositories/interfaces/i.customer.repository'
+import CustomerRepository from '../repositories/implementations/customer.repository'
+import ICustomerService from '../services/interfaces/i.customer.service'
+import CustomerService from '../services/implementations/customer.service'
 
 container.registerSingleton<IProductRepository>(ProductRepository)
 container.registerSingleton<IUserRepository>(UserRepository)
 container.registerSingleton<ITransactionRepository>(TransactionRepository)
 container.registerSingleton<IEmployeeRepository>(EmployeeRepository)
+container.registerSingleton<ICustomerRepository>(CustomerRepository)
 
 container.registerSingleton<IProductService>(ProductService)
 container.registerSingleton<IUserService>(UserService)
 container.registerSingleton<ITransactionService>(TransactionService)
+container.registerSingleton<ICustomerService>(CustomerService)
 
 container.registerSingleton(ProductController)
