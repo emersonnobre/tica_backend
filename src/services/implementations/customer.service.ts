@@ -3,7 +3,6 @@ import Customer from '../../models/customer.model';
 import ICustomerRepository from '../../repositories/interfaces/i.customer.repository'
 import CustomerRepository from '../../repositories/implementations/customer.repository';
 import { mapper } from '../../util/mappings/automapper';
-// import GetCustomerResponse from '../../util/responses/customer/get-customer.response';
 import ICustomerService from '../interfaces/i.customer.service';
 import ApiResponse from '../../util/responses/api.response';
 import CreateCustomerRequest from '../../util/requests/customer/create-customer.request';
@@ -15,6 +14,8 @@ import PaginationFilter from '../../util/requests/comum/pagination.filter.reques
 import UpdateCustomerRequest from '../../util/requests/customer/update-customer.request';
 import EmployeeRepository from '../../repositories/implementations/employee.repository';
 import IEmployeeRepository from '../../repositories/interfaces/i.employee.repository';
+import { CreateAddressRequest } from '../../util/requests/customer/create-address.request';
+import Address from '../../models/address.model';
 
 @injectable()
 export default class CustomerService implements ICustomerService {
@@ -79,6 +80,14 @@ export default class CustomerService implements ICustomerService {
         return new ApiResponse<undefined>(false, 404, 'Funcionário não encontrado!')
 
       customer.update(request, employee)
+
+      const addressesToRemove = customer.addresses.filter(address => !request.addresses?.find(x => x.id == address.id))
+      const addressesToCreate = request.addresses?.filter(address => address.id == undefined)
+
+      customer.removeAddresses(addressesToRemove)
+      if (addressesToCreate)
+        customer.addAddresses(addressesToCreate.map(x => mapper.map(x, CreateAddressRequest, Address)))
+
       this._customerRepository.save(customer)
       return new ApiResponse<undefined>(true, 204, undefined, undefined)
     } catch (err) {

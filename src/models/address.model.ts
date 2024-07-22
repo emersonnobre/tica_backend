@@ -1,5 +1,5 @@
 import { AutoMap } from '@automapper/classes'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import Customer from './customer.model'
 
 @Entity()
@@ -17,6 +17,7 @@ export default class Address {
   @Column({ length: 8, nullable: true })
   cep?: string
   @AutoMap(() => Customer)
-  @ManyToOne(() => Customer, (customer) => customer.addresses)
+  @ManyToOne(() => Customer, (customer) => customer.addresses, { onDelete: 'CASCADE', orphanedRowAction: 'delete', nullable: false })
+  @JoinColumn()
   customer: Customer
 }

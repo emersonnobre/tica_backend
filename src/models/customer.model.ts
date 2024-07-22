@@ -37,7 +37,7 @@ export default class Customer {
   @Column({ type: 'timestamp with time zone', nullable: true })
   updatedAt?: Date
   @AutoMap(() => Address)
-  @OneToMany(() => Address, (address) => address.customer, { cascade: true })
+  @OneToMany(() => Address, (address) => address.customer, { cascade: ['insert', 'update', 'remove'], orphanedRowAction: 'delete' })
   addresses: Address[]
   @AutoMap(() => Employee)
   @ManyToOne(() => Employee)
