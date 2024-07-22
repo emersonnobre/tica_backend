@@ -1,17 +1,34 @@
 import { z } from "zod";
+import { getInvalidTypeMessage, getMaxLengthMessage, getRequiredMessage } from "./message.factory";
 
 export const CreateCustomer = z.object({
-  name: z.string({ required_error: "Informe o nome do cliente!" }).max(100, "O nome deve ter no máximo 100 caracteres!"),
-  cpf: z.string({ required_error: "Informe o CPF do cliente!" }).max(11,  "O CPF deve ter no máximo 11 caracteres!"),
-  phone: z.string().max(20,  "O telefone deve ter no máximo 20 caracteres!").optional(),
-  email: z.string().max(100,  "O e-mail deve ter no máximo 100 caracteres!").email("Formato do e-mail inválido").optional(),
-  socialMedia: z.string().max(70,  "O usuário do instagram deve ter no máximo 70 caracteres!").optional(),
+  name: z.string({ required_error: getRequiredMessage("o nome do cliente") }).max(100, getMaxLengthMessage("nome", 100)),
+  cpf: z.string({ required_error: getRequiredMessage("o CPF do cliente!") }).max(11,  getMaxLengthMessage("CPF", 11)),
+  phone: z.string().max(20, getMaxLengthMessage("telefone", 20)).optional(),
+  email: z.string().max(100, getMaxLengthMessage("e-mail", 100)).email("Formato do e-mail inválido").optional(),
+  socialMedia: z.string().max(70,  getMaxLengthMessage("usuário do instagram", 70)).optional(),
   birthday: z.string().date("Formato da data de aniversário inválida!").optional(),
-  wishList: z.string().max(1000,  "A lista de desejos deve ter no máximo 1000 caracteres!").optional(),
-  createdById: z.string({ required_error: "Informe o id do funcionário!" }),
+  wishList: z.string().max(1000,  getMaxLengthMessage("lista de desejos", 1000)).optional(),
+  createdById: z.string({ required_error: getRequiredMessage("o id do funcionário!") }),
   addresses: z.array(z.object({
-    street: z.string({ required_error: "Informe a rua do endereco!" }).max(200,  "A rua deve ter no máximo 200 caracteres!"),
-    neighborhood: z.string({ required_error: "Informe o bairro do endereco!" }).max(70,  "O bairro deve ter no máximo 70 caracteres!"),
-    cep: z.string().max(8,  "O CEP deve ter no máximo 8 caracteres!").optional(),
+    street: z.string({ required_error: getRequiredMessage("a rua do endereco!") }).max(200,  getMaxLengthMessage("rua", 200)),
+    neighborhood: z.string({ required_error: getRequiredMessage("o bairro do endereco!") }).max(70,  getMaxLengthMessage("bairro", 70)),
+    cep: z.string().max(8,  getMaxLengthMessage("CEP", 8)).optional(),
+  })).optional()
+})
+
+export const UpdateCustomerValidator = z.object({
+  name: z.string({ required_error: getRequiredMessage("o nome do cliente!") }).max(100, getMaxLengthMessage("nome", 100)),
+  phone: z.string().max(20,  getMaxLengthMessage("telefone", 20)).optional(),
+  email: z.string().max(100,  getMaxLengthMessage("e-mail", 100)).email("Formato do e-mail inválido").optional(),
+  socialMedia: z.string().max(70,  getMaxLengthMessage("usuário do instagram", 70)).optional(),
+  birthday: z.string().date("Formato da data de aniversário inválida!").optional(),
+  wishList: z.string().max(1000,  getMaxLengthMessage("lista de desejos", 1000)).optional(),
+  updatedById: z.string({ required_error: getRequiredMessage("o id do funcionário!") }),
+  addresses: z.array(z.object({
+    id: z.number({ invalid_type_error: getInvalidTypeMessage("O id do endereco", "numérico") }).optional(),
+    street: z.string({ required_error: getRequiredMessage("a rua do endereco!") }).max(200,  getMaxLengthMessage("rua", 200)),
+    neighborhood: z.string({ required_error: getRequiredMessage("o bairro do endereco!") }).max(70,  getMaxLengthMessage("bairro", 70)),
+    cep: z.string().max(8,  getMaxLengthMessage("CEP", 8)).optional(),
   })).optional()
 })
