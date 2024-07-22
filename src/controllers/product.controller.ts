@@ -8,6 +8,7 @@ import { UpdateProductRequest } from '../util/requests/product/update-product.re
 import CreateTransactionRequest from '../util/requests/product/create-transaction.request'
 import { CreateProductValidator, UpdateProductValidator } from './validators/product.validator'
 import BaseController from './base.controller'
+import { CreateTransactionValidator } from './validators/transaction.validator'
 
 @injectable()
 export class ProductController extends BaseController {
@@ -66,8 +67,12 @@ export class ProductController extends BaseController {
 
   async addNewTransaction(req: Request, res: Response) {
     const productId = req.params.id as string
-    const transactionRequest: CreateTransactionRequest = req.body
-    const result = await this.productService.createTransaction(productId, transactionRequest)
+    const request: CreateTransactionRequest = req.body
+    const validationResult = this.validateRequest(CreateTransactionValidator, request)
+    if (!validationResult.status) {
+      return res.status(400).json(validationResult.response)
+    }
+    const result = await this.productService.createTransaction(productId, request)
     res.status(result.httpStatusCode).json(result)
   }
 }
