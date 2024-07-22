@@ -7,14 +7,23 @@ import PaginationFilter from '../util/requests/comum/pagination.filter.request'
 import GetCustomersFilter from '../util/requests/customer/get-customers.filter.request'
 import UpdateCustomerRequest from '../util/requests/customer/update-customer.request'
 
+import { CreateCustomer as CreateCustomerValidator } from './validators/customer.validator'
+import ApiResponse from '../util/responses/api.response'
+
 @injectable()
 export class CustomerController {
   constructor(@inject(CustomerService) private customerService: ICustomerService) { }
 
   async createCustomer(req: Request, res: Response) {
     const request: CreateCustomerRequest = req.body
+    const v = CreateCustomerValidator.safeParse(request)
+    if (!v.success) {
+      const { issues } = v.error
+      const messages = issues.map(issue => issue.message)
+      return res.status(400).json(new ApiResponse<null>(false, 400, messages.join('\n'), null))
+    }
     const result = await this.customerService.create(request)
-    res.status(result.httpStatusCode).json(result)
+    res.status(200).json(result)
   }
 
   async get(req: Request, res: Response) {
