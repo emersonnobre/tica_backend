@@ -201,13 +201,16 @@
  *           required: true
  *           type: string
  *           description: Street and number
+ *           example: Tv Egon Maner, 78
  *         neighborhood:
  *           required: true
  *           type: string
  *           description: Neighborhood
+ *           example: Piratonaso
  *         cep:
  *           type: string
  *           description: CEP
+ *           example: 79008976
  *     CreateCustomerRequest:
  *       type: object
  *       properties:
@@ -215,28 +218,36 @@
  *           required: true
  *           type: string
  *           description: Name
+ *           example: Emerson Gabriel Rocha Nobre
  *         cpf:
  *           required: true
  *           type: string
  *           description: CPF without mask
+ *           example: 06369196177
  *         phone:
  *           type: string
  *           description: Phone without mask and with DDD
+ *           example: 67991280181
  *         email:
  *           type: string
  *           description: E-mail
+ *           example: emerson@asa.com
  *         socialMedia:
  *           type: string
  *           description: Social media
+ *           example: emerson_nobre
  *         birthday:
  *           type: string
  *           description: Birthday date
+ *           example: 2003-03-10
  *         wishList:
  *           type: string
  *           description: wishList
+ *           example: pratos e copos
  *         createdById:
  *           type: string
  *           description: Employee id
+ *           example: exampleid
  *         addresses:
  *           type: array
  *           items:

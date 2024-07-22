@@ -23,7 +23,7 @@ export class CustomerController {
       return res.status(400).json(new ApiResponse<null>(false, 400, messages.join('\n'), null))
     }
     const result = await this.customerService.create(request)
-    res.status(200).json(result)
+    res.status(result.httpStatusCode).json(result)
   }
 
   async get(req: Request, res: Response) {
