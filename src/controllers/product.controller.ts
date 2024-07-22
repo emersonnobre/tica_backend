@@ -6,10 +6,14 @@ import IProductService from '../services/interfaces/i.product.service'
 import { GetPaginatedProductsRequest } from '../util/requests/product/paginated-products.request'
 import { UpdateProductRequest } from '../util/requests/product/update-product.request'
 import CreateTransactionRequest from '../util/requests/product/create-transaction.request'
+import { CreateProductValidator, UpdateProductValidator } from './validators/product.validator'
+import BaseController from './base.controller'
 
 @injectable()
-export class ProductController {
-  constructor(@inject(ProductService) private productService: IProductService) { }
+export class ProductController extends BaseController {
+  constructor(@inject(ProductService) private productService: IProductService) {
+    super()
+  }
 
   async getProducts(req: Request, res: Response) {
     const { offset, limit, name, isFeedstock } = req.query
@@ -24,8 +28,12 @@ export class ProductController {
   }
 
   async addNewProduct(req: Request, res: Response) {
-    const productRequest: CreateProductRequest = req.body
-    const result = await this.productService.createProduct(productRequest)
+    const request: CreateProductRequest = req.body
+    const validationResult = this.validateRequest(CreateProductValidator, request)
+    if (!validationResult.status) {
+      return res.status(400).json(validationResult.response)
+    }
+    const result = await this.productService.createProduct(request)
     res.status(result.httpStatusCode).json(result)
   }
 
@@ -47,8 +55,12 @@ export class ProductController {
 
   async updateProduct(req: Request, res: Response) {
     const productId = req.params.id as string
-    const updatedProduct: UpdateProductRequest = req.body
-    const result = await this.productService.updateProduct(productId, updatedProduct);
+    const request: UpdateProductRequest = req.body
+    const validationResult = this.validateRequest(UpdateProductValidator, request)
+    if (!validationResult.status) {
+      return res.status(400).json(validationResult.response)
+    }
+    const result = await this.productService.updateProduct(productId, request);
     res.status(result.httpStatusCode).json(result)
   }
 
