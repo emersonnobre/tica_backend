@@ -10,7 +10,7 @@ export default class Employee {
   @Column({ length: 100 })
   name: string
   @AutoMap()
-  @Column('timestamp', { nullable: true })
+  @Column('timestamp with time zone', { nullable: true })
   createdAt: Date
 
   constructor (id: string) {
