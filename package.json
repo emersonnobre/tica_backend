@@ -5,7 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "seed": "npx typeorm-seeding seed",
+    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "author": "emersonnobre",
   "license": "ISC",
@@ -37,6 +40,7 @@
     "@types/uuid": "^9.0.8",
     "nodemon": "^3.1.3",
     "ts-node": "^10.9.2",
+    "typeorm-seeding": "^1.6.1",
     "typescript": "^5.4.5"
   }
 }

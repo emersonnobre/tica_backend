@@ -11,6 +11,7 @@ services:
       - "5432:5432" # Mapeia a porta 5432 do host para o container
     volumes:
       - ./data:/var/lib/postgresql/data
+    user: '1000:1000'
 
   pgadmin:
     image: dpage/pgadmin4
